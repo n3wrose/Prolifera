@@ -10,6 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".CreateMetricsActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".CreateEtapaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CreateGenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GenMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GenSelectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -17,7 +17,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
-    private TextView tvLoginInfo;
+    private TextView tvInfoLogin;
 
     private String username, password;
 
@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
-        tvLoginInfo = (TextView) findViewById(R.id.tvLoginInfo);
+        tvInfoLogin = (TextView) findViewById(R.id.tvInfoLogin);
 
     }
 
@@ -43,11 +43,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginYeet() {
-        tvLoginInfo.setText("Conectado!");
+        tvInfoLogin.setText("Conectado!");
     }
 
     private void loginNah() {
-        tvLoginInfo.setText("Erro na conexão");
+        tvInfoLogin.setText("Erro na conexão");
     }
 
 
@@ -57,8 +57,8 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            tvLoginInfo.setText("Conectando...");
-            tvLoginInfo.setVisibility(View.VISIBLE);
+            tvInfoLogin.setText("Conectando...");
+            tvInfoLogin.setVisibility(View.VISIBLE);
 
         }
 
