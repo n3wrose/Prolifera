@@ -53,7 +53,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imgLogoGenerateBatch" />
 
         <ListView
-            android:id="@+id/lstParent"
+            android:id="@+id/lstParentGenerateBatch"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
@@ -140,7 +140,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvScanParentsGenerateBatch" />
 
         <Button
-            android:id="@+id/btnScanParent"
+            android:id="@+id/btnScanParentGenerateBatch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -162,7 +162,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvParentsInfo" />
+            app:layout_constraintTop_toBottomOf="@+id/tvParentsInfoGenerateBatch" />
 
         <EditText
             android:id="@+id/etDescriptionGenerateBatch"
@@ -178,7 +178,7 @@
             app:layout_constraintStart_toEndOf="@+id/tvEnterDescriptionGenerateBatch" />
 
         <TextView
-            android:id="@+id/tvParentsInfo"
+            android:id="@+id/tvParentsInfoGenerateBatch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

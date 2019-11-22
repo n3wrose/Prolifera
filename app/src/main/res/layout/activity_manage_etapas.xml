@@ -112,7 +112,7 @@
                 android:padding="3dp"
                 android:text="Sem etapas em andamento!"
                 android:textColor="@android:color/white"
-                android:visibility="visible" />
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tvEtapasFinalizadasTitle"
@@ -152,7 +152,7 @@
                 android:padding="3dp"
                 android:text="Sem etapas finalizadas!"
                 android:textColor="@android:color/white"
-                android:visibility="visible" />
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tvEtapasNaoIniciadasTitle"
@@ -191,7 +191,7 @@
                 android:padding="3dp"
                 android:text="Sem etapas não iniciadas!"
                 android:textColor="@android:color/white"
-                android:visibility="visible" />
+                android:visibility="invisible" />
 
         </LinearLayout>
 

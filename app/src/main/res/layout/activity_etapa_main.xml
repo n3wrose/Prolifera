@@ -174,7 +174,6 @@
             android:id="@+id/tvMetricsInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:background="@drawable/roundedbutton"
             android:backgroundTint="@android:color/holo_red_dark"
             android:padding="3dp"
@@ -183,13 +182,12 @@
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMetricsList" />
+            app:layout_constraintTop_toBottomOf="@+id/lstMetric" />
 
         <TextView
             android:id="@+id/tvQualifiersInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:background="@drawable/roundedbutton"
             android:backgroundTint="@android:color/holo_red_dark"
             android:padding="3dp"
@@ -198,7 +196,7 @@
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvQualifiersList" />
+            app:layout_constraintTop_toBottomOf="@+id/lstQualifier" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
