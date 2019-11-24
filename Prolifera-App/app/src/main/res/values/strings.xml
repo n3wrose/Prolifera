@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Prolifera</string>
+    <string name="server_address">192.168.1.30</string>
+</resources>

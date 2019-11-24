@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.prolifera.app.Activities.GenSelectionActivity">
+
+    <ImageView
+        android:id="@+id/imgLogoGenSelection"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_noname" />
+
+    <TextView
+        android:id="@+id/tvUserLoggedGenSelection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Logado como: user"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnLogoutGenSelection"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Sair"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserLoggedGenSelection" />
+
+    <TextView
+        android:id="@+id/tvGenListTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Lista de Gens"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLogoGenSelection" />
+
+    <Button
+        android:id="@+id/btnCreateGen"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/roundedbutton"
+        android:backgroundTint="@color/colorPrimary"
+        android:includeFontPadding="false"
+        android:onClick="novoGen"
+        android:text="+"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ListView
+        android:id="@+id/lstGen"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnCreateGen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvGenListTitle">
+
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/tvCreateGen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="40dp"
+        android:text="Criar novo Gen"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/btnCreateGen" />
+
+    <Button
+        android:id="@+id/btnManageUsersGenSelection"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:text="Gerenciar usuários"
+        app:layout_constraintEnd_toStartOf="@+id/btnLogoutGenSelection"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserLoggedGenSelection" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

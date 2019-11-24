@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.prolifera.app.Activities.GenerateBatchActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btnCreateGen2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/roundedbutton"
+            android:backgroundTint="#9CA09797"
+            android:includeFontPadding="false"
+            android:text="?"
+            android:textAlignment="center"
+            android:textColor="#646060"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/etNumberSubGenerateBatch"
+            app:layout_constraintTop_toTopOf="@+id/etNumberSubGenerateBatch" />
+
+        <ImageView
+            android:id="@+id/imgLogoGenerateBatch"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo_noname" />
+
+        <TextView
+            android:id="@+id/tvUserLoggedGenerateBatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Logado como: user"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnLogoutGenerateBatch"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="Sair"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserLoggedGenerateBatch" />
+
+        <TextView
+            android:id="@+id/tvGenerateBatchTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Gerar pacote de amostras"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgLogoGenerateBatch" />
+
+        <ListView
+            android:id="@+id/lstParentGenerateBatch"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddedParentsGenerateBatch">
+
+
+        </ListView>
+
+        <EditText
+            android:id="@+id/etNumberSubGenerateBatch"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvEnterNumberGenerateBatch"
+            app:layout_constraintStart_toEndOf="@+id/tvXGenerateBatch" />
+
+        <EditText
+            android:id="@+id/etNumberGenerateBatch"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvEnterNumberGenerateBatch"
+            app:layout_constraintStart_toEndOf="@+id/tvEnterNumberGenerateBatch" />
+
+        <TextView
+            android:id="@+id/tvEnterNumberGenerateBatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Quantidade:"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvGenerateBatchTitle" />
+
+        <TextView
+            android:id="@+id/tvXGenerateBatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:text="x"
+            android:textSize="25sp"
+            app:layout_constraintStart_toEndOf="@+id/etNumberGenerateBatch"
+            app:layout_constraintTop_toBottomOf="@+id/tvGenerateBatchTitle" />
+
+        <TextView
+            android:id="@+id/tvEnterDescriptionGenerateBatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Descrição:"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvChooseEtapaGenerateBatch" />
+
+        <TextView
+            android:id="@+id/tvChooseEtapaGenerateBatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="50dp"
+            android:text="Etapa:"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEnterNumberGenerateBatch" />
+
+        <Spinner
+            android:id="@+id/spnEtapa"
+            android:layout_width="300dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/tvChooseEtapaGenerateBatch"
+            app:layout_constraintTop_toTopOf="@id/tvChooseEtapaGenerateBatch" />
+
+        <TextView
+            android:id="@+id/tvScanParentsGenerateBatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Pais (opcional):"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEnterDescriptionGenerateBatch" />
+
+        <TextView
+            android:id="@+id/tvAddedParentsGenerateBatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Pais adicionados (clique para remover):"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvScanParentsGenerateBatch" />
+
+        <Button
+            android:id="@+id/btnScanParentGenerateBatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="Scan"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvScanParentsGenerateBatch"
+            app:layout_constraintStart_toEndOf="@+id/tvScanParentsGenerateBatch" />
+
+        <Button
+            android:id="@+id/btnGenerateBatch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/colorPrimary"
+            android:onClick="gerarLote"
+            android:text="Gerar Lote"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvParentsInfoGenerateBatch" />
+
+        <EditText
+            android:id="@+id/etDescriptionGenerateBatch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvEnterDescriptionGenerateBatch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvEnterDescriptionGenerateBatch" />
+
+        <TextView
+            android:id="@+id/tvParentsInfoGenerateBatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/roundedbutton"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:padding="3dp"
+            android:text="Nenhum pai cadastrado!"
+            android:textColor="@android:color/white"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddedParentsGenerateBatch" />
+
+        <TextView
+            android:id="@+id/tvGenerateBatchHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="Os dados serão aplicados a todas as amostras geradas."
+            android:textColor="@android:color/darker_gray"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnGenerateBatch" />
+
+        <TextView
+            android:id="@+id/tvAmostraGenerateBatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="amostras"
+            android:textColor="@android:color/darker_gray"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etNumberGenerateBatch" />
+
+        <TextView
+            android:id="@+id/tvAmostraGenerateBatch2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="subamostras"
+            android:textColor="@android:color/darker_gray"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.797"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etNumberSubGenerateBatch" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
+
