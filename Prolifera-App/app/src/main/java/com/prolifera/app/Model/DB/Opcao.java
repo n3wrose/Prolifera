@@ -1,6 +1,8 @@
 package com.prolifera.app.Model.DB;
 
-public class Opcao {
+import java.io.Serializable;
+
+public class Opcao implements Serializable {
     
     
     private long idRegistro;
