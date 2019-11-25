@@ -1,0 +1,26 @@
+---Tema---
+
+Prolifera App: Um sistema de gerenciamento para experimentos científicos 
+
+---Contexto---
+
+Após conversas e visitas no Núcleo de Bionanomanufatura do Instituto de Pesquisas Tecnológicas (IPT), foi notado um ponto de otimização na maneira de condução dos experimentos no laboratório: Mudar o modo de registro da documentação, trocando dezenas de folhas de papel, com alto potencial de perdas, para um banco de dados alimentado por um aplicativo Android customizado para a tarefa.
+
+---Objetivo---
+
+A ideia do aplicativo é automatizar procedimentos realizados em laboratórios de pesquisa relacionados a condução e ramificação de amostras. Para isso, o trabalho desenvolvido deve ser capaz de:
+
+> Leitura e geração de QR codes para serem adicionados à cada amostra de um projeto
+
+> Catalogação e visualização temporal do relacionamento de etapas e amostras de cada um dos projetos
+
+> Inserção, edição e remoção de dados nas amostras (como peso, umidade, coloração ou mesmo fotos) e etapas
+
+---Metodologia---
+
+Foram feitas, ao longo do ano, visitas e entrevistas com pesquisadores que estarão envolvidos com os experimentos comtemplados pelo aplicativo, que contribuíram com o alinhamento do projeto, definição de requisitos e algumas ideias para a interface e experiência de usuário. Quando o projeto for implantado no laboratório, planeja-se criar um processo regular de feedbacks pelo tempo necessário para que bugs que passaram pelos testes sejam corrigidos e funções ou aprimoramentos extras requeridas pelos próprios usuários possam ser implementadas em updates posteriores.
+
+---Arquitetura---
+
+Qualquer celular Android com versão igual ou superior a 6.0 (Marshmallow) é capaz de rodar a aplicação. A partir daí, o usuário pode então configurar projetos e etapas de acordo com seu ambiente. Escaneando o QR code de uma amostra a ser manipulada, é possível inserir e editar dados, como medidas, descrição, fotos e relacionamento com outras amostras. Todas as ações são armazenadas num banco de dados relacional PostgreSQL com a ajuda do framework Spring, que facilita a conexão entre front end e back end.
+
