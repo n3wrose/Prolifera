@@ -59,6 +59,7 @@ public class CreateGenActivity extends AppCompatActivity {
 
     public void seguinte(View view) {
         processo = new Processo();
+        btnNextCreateGen.setEnabled(false);
         tvInfoNewGen.setText("Enviando dados ...");
         tvInfoNewGen.setVisibility(View.VISIBLE);
         processo.setLote(etGenName.getText().toString());
@@ -71,7 +72,7 @@ public class CreateGenActivity extends AppCompatActivity {
                     processoDTO = JsonParser.parseProcesso(response);
                     tvInfoNewGen.setText("Dados recebidos!");
                     try { Thread.sleep(500); } catch (Exception e) { }
-                    Intent intent = new Intent(CreateGenActivity.this, CreateEtapaActivity.class);
+                    Intent intent = new Intent(CreateGenActivity.this, GenMainActivity.class);
                     intent.putExtra("processo",processoDTO);
                     intent.putExtra("usuario",usuario);
                     startActivity(intent);
@@ -82,6 +83,7 @@ public class CreateGenActivity extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     tvInfoNewGen.setText("Erro ao enviar dados: "+error.getMessage());
+                    btnNextCreateGen.setEnabled(true);
                 }
 
             }){

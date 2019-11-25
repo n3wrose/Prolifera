@@ -57,7 +57,7 @@ public class ManageEtapasActivity extends AppCompatActivity {
         rq = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
 
         tvEtapasListTitle.setText("ETAPAS - " + processo.getLote());
-        tvUserLoggedManageEtapas.setText("Logado como "+usuario.getNome());
+        tvUserLoggedManageEtapas.setText("Logado como: "+usuario.getNome());
         updateEtapas();
     }
 
@@ -131,6 +131,7 @@ public class ManageEtapasActivity extends AppCompatActivity {
                                 }
                             } catch (Exception e) { e.printStackTrace(); }
                         }
+
                     }
                 }, new Response.ErrorListener() {
                     @Override

@@ -65,18 +65,15 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(JSONObject response) {
-                if (response.equals(null))
-                    loginNah("Usuário não encontrado!");
-                else {
+                if (response != null) {
                     usuario = JsonParser.parseUser(response);
                     if (usuario.getSenha().equals(password))
                         loginYeet();
                     else
                         loginNah("Senha incorreta, tente novamente");
+                    } else  loginNah("Usuário não encontrado!");
                 }
-
-            }
-        }, new Response.ErrorListener() {
+            }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {

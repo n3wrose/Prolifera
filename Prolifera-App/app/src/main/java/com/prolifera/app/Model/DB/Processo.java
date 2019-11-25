@@ -20,7 +20,7 @@ public class Processo {
         this.idProcesso = pdto.getIdProcesso();
         this.dataZero = new SimpleDateFormat("yyyy-MM-dd").parse(pdto.getDataZero());
         this.lote = pdto.getLote();
-        this.timestamp = pdto.getTimestamp();
+        this.timestamp = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(pdto.getTimestamp());
         this.usuario = pdto.getUsuario().getLogin();
 
     }

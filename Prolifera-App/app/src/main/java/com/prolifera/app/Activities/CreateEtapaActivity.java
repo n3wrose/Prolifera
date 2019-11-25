@@ -27,6 +27,6 @@ public class CreateEtapaActivity extends AppCompatActivity {
         processo = (ProcessoDTO) getIntent().getExtras().get("processo");
         usuario = (Usuario) getIntent().getExtras().get("usuario");
 
-        tvUserLoggedCreateEtapa.setText("Logado como "+ usuario.getNome());
+        tvUserLoggedCreateEtapa.setText("Logado como: "+ usuario.getNome());
     }
 }

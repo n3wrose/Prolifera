@@ -2,17 +2,20 @@ package com.prolifera.app.Model.DTO;
 
 import com.prolifera.app.Model.DB.AmostraClassificacao;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 
-public class AmostraClassificacaoDTO {
+public class AmostraClassificacaoDTO implements Serializable {
     private ClassificacaoDTO classificacaoDTO;
     private String valor;
-    private Date timestamp;
+    private String timestamp;
 
     public AmostraClassificacaoDTO(AmostraClassificacao ac){
         valor = ac.getValor();
-        timestamp = ac.getTimestamp();
+        timestamp = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ac.getTimestamp());
     }
+
+    public AmostraClassificacaoDTO() { }
 
     public ClassificacaoDTO getClassificacaoDTO() {
         return classificacaoDTO;
@@ -30,11 +33,11 @@ public class AmostraClassificacaoDTO {
         this.valor = valor;
     }
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 

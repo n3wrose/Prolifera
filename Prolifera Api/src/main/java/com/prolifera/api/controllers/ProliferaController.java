@@ -101,12 +101,26 @@ public class ProliferaController {
         return amostras;
     }
 
+    @GetMapping("/amostra/{id}")
+    public AmostraDTO getAmostra(@PathVariable("id") long id){
+        AmostraDTO adto = null;
+        Optional<Amostra> o = amostraRepository.findById(id);
+        if (o.isPresent())
+            adto = fillAmostra((Amostra)o.get());
+        return adto;
+    }
+
     @GetMapping("/amostra_simples")
     public List<AmostraSimples> listAmostrasSimples(){
         List<AmostraSimples> amostras = new ArrayList<AmostraSimples>();
         for (Amostra a : amostraRepository.findAll())
             amostras.add(fillAmostraSimples(a));
         return amostras;
+    }
+
+    @PostMapping("/amostra")
+    public AmostraDTO saveAmostra(@RequestBody Amostra a) {
+        return fillAmostra(amostraRepository.saveAndFlush(a));
     }
 
     @PostMapping("/amostra/{num}")
@@ -132,7 +146,6 @@ public class ProliferaController {
 
     @PostMapping("/medicao")
     public Medicao saveMedicao(@RequestBody Medicao medicao) {
-        System.out.println(medicao.geyPayload());
         return medicaoRepository.saveAndFlush(medicao);
     }
     @GetMapping("/medicao")

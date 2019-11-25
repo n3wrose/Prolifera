@@ -56,7 +56,7 @@ public class GenerateBatchActivity extends AppCompatActivity {
         //RequestQueue instatiation
         rq = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
 
-        tvUserLoggedGenerateBatch.setText("Logado como" + usuario.getNome());
+        tvUserLoggedGenerateBatch.setText("Logado como: " + usuario.getNome());
         fillEtapaSpinner();
     }
 

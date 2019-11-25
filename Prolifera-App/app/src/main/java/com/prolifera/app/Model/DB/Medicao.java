@@ -1,6 +1,8 @@
 package com.prolifera.app.Model.DB;
 
-public class Medicao {
+import java.io.Serializable;
+
+public class Medicao implements Serializable {
     
     
     private long idMedicao;

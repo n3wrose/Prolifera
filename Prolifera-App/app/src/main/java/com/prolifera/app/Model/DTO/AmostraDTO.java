@@ -4,9 +4,10 @@ package com.prolifera.app.Model.DTO;
 import com.prolifera.app.Model.DB.Amostra;
 import com.prolifera.app.Model.DB.Usuario;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AmostraDTO {
+public class AmostraDTO implements Serializable {
 
     private String dataCriacao;
     private String dataFim;
@@ -27,7 +28,7 @@ public class AmostraDTO {
         nome = amostra.getNome();
         idAmostra = amostra.getIdAmostra();
         descricao = amostra.getDescricao();
-
+        dataFim = amostra.getDataFim();
     }
 
     public List<AmostraSimples> getFilhos() {

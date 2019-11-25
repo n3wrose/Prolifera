@@ -4,9 +4,10 @@ package com.prolifera.app.Model.DTO;
 import com.prolifera.app.Model.DB.Classificacao;
 import com.prolifera.app.Model.DB.Opcao;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ClassificacaoDTO {
+public class ClassificacaoDTO implements Serializable {
 
     private long idClassificacao;
     private String nome;

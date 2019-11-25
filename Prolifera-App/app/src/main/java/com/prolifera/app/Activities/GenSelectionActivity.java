@@ -62,6 +62,7 @@ public class GenSelectionActivity extends AppCompatActivity {
             Intent intent = new Intent(this, CreateGenActivity.class);
             intent.putExtra("usuario",usuario);
             startActivity(intent);
+            updateProcesses();
     }
 
     private void updateProcesses() {
@@ -90,7 +91,7 @@ public class GenSelectionActivity extends AppCompatActivity {
                             try {
                                 ProcessoDTO pdto = JsonParser.parseProcesso(response.getJSONObject(i));
                                 processos.add(pdto);
-                                processosAdapter.add(pdto.getLote()+" - "+pdto.getDataZero());
+                                processosAdapter.add(pdto.getLote()+ "  -  "+pdto.getTimestamp());
                             } catch (Exception e) { e.printStackTrace(); }
                         }
                     }

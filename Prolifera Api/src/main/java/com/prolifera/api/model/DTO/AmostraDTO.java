@@ -27,7 +27,7 @@ public class AmostraDTO {
         nome = amostra.getNome();
         idAmostra = amostra.getIdAmostra();
         descricao = amostra.getDescricao();
-
+        dataFim = amostra.getDataFim();
     }
 
     public List<AmostraSimples> getFilhos() {

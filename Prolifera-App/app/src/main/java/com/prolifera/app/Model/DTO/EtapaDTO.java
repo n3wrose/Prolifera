@@ -4,7 +4,7 @@ import com.prolifera.app.Model.DB.Etapa;
 import com.prolifera.app.Model.DB.Usuario;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class EtapaDTO implements Serializable {
 
@@ -23,7 +23,7 @@ public class EtapaDTO implements Serializable {
     private String dataFim;
     private String dataInicio;
     private String dataPrevista;
-    private Date timestamp;
+    private String timestamp;
 
     public EtapaDTO() {
 
@@ -40,14 +40,14 @@ public class EtapaDTO implements Serializable {
         dataInicio = etapa.getDataInicio();
         dataPrevista = etapa.getDataPrevista();
         status = etapa.getStatus();
-        timestamp = etapa.getTimestamp();
+        timestamp = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(etapa.getTimestamp());
     }
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -123,7 +123,8 @@ public class EtapaDTO implements Serializable {
         this.dataFim = dataFim;
     }
 
-    public String getDataInicio() {
+    public String getDataInicio()
+    {
         return dataInicio;
     }
 
