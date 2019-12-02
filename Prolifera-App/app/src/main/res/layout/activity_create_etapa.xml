@@ -11,24 +11,28 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/tvInfoNewEtapa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Any info"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEnterEtapaEquipament" />
+
+        <TextView
             android:id="@+id/tvNewEtapaTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Novo Gen"
+            android:text="Nova Etapa"
             android:textSize="40sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgLogoCreateEtapa" />
-
-        <Button
-            android:id="@+id/btnLogoutCreateEtapa"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="Sair"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvUserLoggedCreateEtapa" />
 
         <ImageView
             android:id="@+id/imgLogoCreateEtapa"
@@ -52,15 +56,100 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvNewEtapaSubtitle"
+            android:id="@+id/tvEnterEtapaName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Nome da etapa:"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEnterEtapaCode" />
+
+        <TextView
+            android:id="@+id/tvEnterEtapaEquipament"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Etapa 2/3: Criar etapas"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Nome:"
+            android:visibility="invisible"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/swtEquipament" />
+
+        <TextView
+            android:id="@+id/tvEnterEtapaDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Data prevista:"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEnterEtapaName" />
+
+        <TextView
+            android:id="@+id/tvEnterEtapaDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Descrição"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEnterEtapaDate" />
+
+        <TextView
+            android:id="@+id/tvEnterEtapaCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Código da etapa:"
+            android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvNewEtapaTitle" />
+
+        <EditText
+            android:id="@+id/etEtapaName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvEnterEtapaName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvEnterEtapaName" />
+
+        <EditText
+            android:id="@+id/etEtapaEquipament"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:visibility="invisible"
+            android:inputType="textPersonName"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvEnterEtapaEquipament"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tvEnterEtapaEquipament" />
+
+        <EditText
+            android:id="@+id/etEtapaCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textSize="25sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvEnterEtapaCode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvEnterEtapaCode"
+            tools:text="ETP" />
 
         <Button
             android:id="@+id/btnNextCreateEtapa"
@@ -76,8 +165,76 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNewEtapaSubtitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvInfoNewEtapa" />
+
+        <Switch
+            android:id="@+id/swtEquipament"
+            android:layout_width="0dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:text="Equipamento"
+            android:textColor="#6B6B6B"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvInfoStartEtapa" />
+
+        <Switch
+            android:id="@+id/swtAutoStartEtapa"
+            android:layout_width="0dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:text="Iniciar Etapa"
+            android:textColor="#6B6B6B"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etEtapaDescription" />
+
+        <EditText
+            android:id="@+id/etEtapaDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="date"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvEnterEtapaDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvEnterEtapaDate" />
+
+        <EditText
+            android:id="@+id/etEtapaDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvEnterEtapaDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvEnterEtapaDescription" />
+
+        <TextView
+            android:id="@+id/tvInfoStartEtapa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text='Etapas não iniciadas agora terão o status "EM ESPERA" e devem ser iniciadas mais tarde pela lista de etapas.'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/swtAutoStartEtapa" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
