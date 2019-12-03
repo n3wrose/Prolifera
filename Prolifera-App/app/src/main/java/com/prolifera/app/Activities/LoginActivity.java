@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -58,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
         username = etUsername.getText().toString();
         password = etPassword.getText().toString();
-        String url = "http://" + getResources().getString(R.string.server_address) + ":8080/api/prolifera/user/" + username.replace("'", "");
+        String url = getResources().getString(R.string.server_address) + "user/" + username.replace("'", "");
 
         JsonObjectRequest loginRequest = new JsonObjectRequest
             (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -82,17 +83,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        tvInfoLogin.setText("Conectando...");
-        tvInfoLogin.setVisibility(View.VISIBLE);
+        Toast.makeText(LoginActivity.this, "Conectando . . .", Toast.LENGTH_SHORT).show();
+        //tvInfoLogin.setVisibility(View.VISIBLE);
         rq.add(loginRequest);
 
     }
 
     private void loginYeet() {
-        tvInfoLogin.setText("Conectado!");
+        /*Toast.makeText(LoginActivity.this, "Conectado!", Toast.LENGTH_SHORT).show();
         try {
             Thread.sleep(500);
-        } catch (Exception e) { }
+        } catch (Exception e) { }*/
         Intent intent = new Intent(LoginActivity.this, GenSelectionActivity.class);
         intent.putExtra("usuario",usuario);
         startActivity(intent);
@@ -102,48 +103,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginNah(String message) {
-        tvInfoLogin.setText(message);
+        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
     }
-/*
-    private class LoginAsyncTask extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            tvInfoLogin.setText("Conectando...");
-            tvInfoLogin.setVisibility(View.VISIBLE);
-
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-
-            Log.d(LOG_TAG, "User: " + username + ", Pass: " + password);
-
-
-            //Esse bloco try-catch abaixo soh espera 1 segundo para ir para onPostExecute
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            //Esse return abaixo eh o argumento "result" de "onPostExecute"
-
-            //return "some_random_string";
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            if (result != null)
-                loginYeet();
-            else
-                loginNah();
-
-        }
-    }*/
 }

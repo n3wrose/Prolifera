@@ -1,13 +1,20 @@
 package com.prolifera.app.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,6 +31,7 @@ import com.prolifera.app.RequestQueueSingleton;
 
 import org.json.JSONArray;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +40,8 @@ public class GenerateBatchActivity extends AppCompatActivity {
     private RequestQueue rq;
     private TextView tvUserLoggedGenerateBatch;
     private EditText etDescriptionGenerateBatch, etNumberGenerateBatch, etNumberSubGenerateBatch;
+    private Button btnGenerateBatch;
+    private ListView lstBatchedSamples;
     private Spinner spnEtapa;
     private Usuario usuario;
     private ProcessoDTO processo;
@@ -48,6 +58,8 @@ public class GenerateBatchActivity extends AppCompatActivity {
         spnEtapa = findViewById(R.id.spnEtapa);
         etDescriptionGenerateBatch = findViewById(R.id.etDescriptionGenerateBatch);
         etNumberSubGenerateBatch = findViewById(R.id.etNumberSubGenerateBatch);
+        btnGenerateBatch = findViewById(R.id.btnGenerateBatch);
+        lstBatchedSamples = findViewById(R.id.lstBatchedSamples);
 
         // intent parameters retrieval
         usuario = (Usuario)getIntent().getExtras().get("usuario");
@@ -57,74 +69,93 @@ public class GenerateBatchActivity extends AppCompatActivity {
         rq = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
 
         tvUserLoggedGenerateBatch.setText("Logado como: " + usuario.getNome());
+        etDescriptionGenerateBatch.bringToFront();
+        etNumberGenerateBatch.bringToFront();
+        etNumberSubGenerateBatch.bringToFront();
+        spnEtapa.bringToFront();
+        btnGenerateBatch.setEnabled(false);
         fillEtapaSpinner();
     }
 
     public void gerarLote(View view) {
         final Amostra amostra = new Amostra();
-        int sampleNumber = Integer.parseInt(etNumberGenerateBatch.getText().toString()),
+        final int sampleNumber = Integer.parseInt(etNumberGenerateBatch.getText().toString()),
                 subSampleNumber = Integer.parseInt(etNumberSubGenerateBatch.getText().toString());
         amostra.setDescricao(etDescriptionGenerateBatch.getText().toString());
         amostra.setIdEtapa(etapas.get(spnEtapa.getSelectedItemPosition()).getIdEtapa());
         amostra.setUsuario(usuario.getLogin());
-        String url =  "http://" + getResources().getString(R.string.server_address) + ":8080/api/prolifera/amostra/"+subSampleNumber;
-
-        for (int i = 0; i<sampleNumber; i++) {
-            amostra.setNome(Character.toString((char)(65+i)));
-            JsonArrayRequest loteRequest = new JsonArrayRequest(Request.Method.POST, url, null, new Response.Listener<JSONArray>() {
-
-                @Override
-                public void onResponse(JSONArray response) {
-                    if (response.equals(null)) return;
-                    finish();
+        String url =  getResources().getString(R.string.server_address) + "batch_amostra";
+        final ArrayAdapter<String> amostrasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
 
 
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                }
-            }) {
+        JsonArrayRequest loteRequest = new JsonArrayRequest(Request.Method.POST, url, null, new Response.Listener<JSONArray>() {
 
-                @Override
-                public String getBodyContentType() {
-                    return "application/json; charset=utf-8";
-                }
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response.equals(null)) return;
 
-                @Override
-                public byte[] getBody() {
-                    return amostra.fillPayload().getBytes();
-                }
-            };
-            rq.add(loteRequest);
-        }
+                for (int i=0; i<response.length(); i++)
+                    try {
+                       ;// amostrasAdapter.add(response.getString(i));
+                    } catch (Exception e) { e.printStackTrace(); }
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }) {
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() {
+                String json = "{ \"amostra\": "+amostra.fillPayload() + ", " +
+                        "\"sample\": "+ sampleNumber + ", \"subsample\": "+ subSampleNumber + " } ";
+                return json.getBytes();
+            }
+        };
+        rq.add(loteRequest);
     }
 
     private void fillEtapaSpinner() {
         etapas = new ArrayList<>();
         final ArrayAdapter<String> etapasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
+
         spnEtapa.setAdapter(etapasAdapter);
 
         //setting up ArrayRequest
-        String url = "http://" + getResources().getString(R.string.server_address) + ":8080/api/prolifera/etapa/started/"+processo.getIdProcesso();
+        String url = getResources().getString(R.string.server_address) + "etapa/started/"+processo.getIdProcesso();
         JsonArrayRequest etapasRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        if (response.equals(null)) return;
-                        int i;
-                        for (i = 0; i<response.length(); i++) {
+                        if (!response.equals(null))
+                        for (int i = 0; i<response.length(); i++) {
                             try {
                                 EtapaDTO edto = JsonParser.parseEtapa(response.getJSONObject(i));
                                 etapas.add(edto);
                                 etapasAdapter.add(edto.getCodigo()+" - "+edto.getNome());
                             } catch (Exception e) { e.printStackTrace(); }
                         }
+                        if (etapas.size() == 0)
+                            etapasAdapter.add("Não há etapas em andamento!");
+                        else
+                            btnGenerateBatch.setEnabled(true);
+
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(),"Houve um erro de conexão, tente novamente.",Toast.LENGTH_SHORT);
+                        etapasAdapter.add("Não há etapas!");
+                        btnGenerateBatch.setEnabled(false);
                     }
                 });
         rq.add(etapasRequest);

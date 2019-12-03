@@ -9,7 +9,6 @@ public class Etapa {
     public static final int STATUS_EM_ESPERA = 0;
     public static final int STATUS_EM_ANDAMENTO = 1;
     public static final int STATUS_FINALIZADO = 2;
-
     private String codigo;
     private String nome;
     private Long idEtapa;
@@ -30,7 +29,7 @@ public class Etapa {
                 "        \"codigo\": \""+ codigo +"\",\n" +
                 "        \"usuario\": \""+ usuario +"\",\n" +
                 "        \"idEtapa\": "+idEtapa+",\n" +
-                "        \"equipamento\": "+ equipamento +",\n" +
+                "        \"equipamento\": \""+ equipamento +"\",\n" +
                 "        \"status\": "+ status +",\n" +
                 "        \"idProcesso\": "+ idProcesso +",\n" +
                 "        \"dataFim\": \""+ getDataFim() +"\",\n" +

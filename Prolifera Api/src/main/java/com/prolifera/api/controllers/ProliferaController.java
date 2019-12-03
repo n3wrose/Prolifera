@@ -2,16 +2,20 @@ package com.prolifera.api.controllers;
 
 import com.prolifera.api.model.DB.*;
 import com.prolifera.api.model.DTO.*;
+import com.prolifera.api.model.DTO.EtapaDTO;
+import com.prolifera.api.model.GrafoAmostra;
+import com.prolifera.api.model.ImagePayload;
+import com.prolifera.api.model.SampleBatch;
 import com.prolifera.api.repository.*;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 @RestController
 @RequestMapping("api/prolifera")
@@ -56,7 +60,7 @@ public class ProliferaController {
     @GetMapping("/processo")
     public List<ProcessoDTO> listProcessos() {
         List<ProcessoDTO> processos = new ArrayList<ProcessoDTO>();
-        for (Processo p : processRepository.findAll()) {
+        for (Processo p : processRepository.findAllOrderByDate()) {
             ProcessoDTO pdto = new ProcessoDTO(p);
             pdto.setUsuario(userRepository.findById(p.getUsuario()).get());
             processos.add(pdto);
@@ -118,27 +122,41 @@ public class ProliferaController {
         return amostras;
     }
 
-    @PostMapping("/amostra")
-    public AmostraDTO saveAmostra(@RequestBody Amostra a) {
-        return fillAmostra(amostraRepository.saveAndFlush(a));
+
+
+    @PostMapping("/amostra/picture/{id}")
+    public void savePicture(@RequestBody ImagePayload image) throws IOException {
+
+        AmostraDTO adto = fillAmostra(amostraRepository.findById(image.getId()).get());
+        String path = "p"+ adto.getEtapa().getProcesso().getIdProcesso()+"\\e"+adto.getEtapa().getIdEtapa()+
+                "\\a"+adto.getIdAmostra() ;
+        System.out.println("mkdir "+path);
+        new File(path).mkdirs();
+
+        byte[] decodedBytes = Base64.getDecoder().decode(image.getImagem());
+        FileUtils.writeByteArrayToFile(new File(path+"\\"+new Date()+".jpg"), decodedBytes);
+
+        System.out.println("imagem: "+image.getImagem());
+        System.out.println("id amostra: "+image.getId());
     }
 
-    @PostMapping("/amostra/{num}")
-    public List<AmostraDTO> saveAmostra(@RequestBody Amostra a, @PathVariable("num") int num) {
-        List<AmostraDTO> amostras = new ArrayList<>();
-        if (a.getNome().equals("null")) a.setNome("A");
-        int i;
-        for (i=1; i < num+1 ; i++) {
+    @PostMapping("/batch_amostra")
+    public List<String> saveAmostra(@RequestBody SampleBatch sb) {
+        Amostra a = sb.getAmostra();
+        List<String> lista = new ArrayList<>();
+        for (int i = 0; i < sb.getSample(); i++)
+            for (int j=1; j < sb.getSubsample()+1 ; j++) {
             Amostra amostra = new Amostra();
-            amostra.setNome(a.getNome()+i);
+            amostra.setNome(Character.toString((char)(i+65))+j);
             amostra.setDataCriacao(new Date());
             amostra.setDescricao(a.getDescricao());
             amostra.setIdEtapa(a.getIdEtapa());
             amostra.setUsuario(a.getUsuario());
             amostra.setDataFim(null);
-            amostras.add(fillAmostra(amostraRepository.saveAndFlush(amostra)));
+            amostraRepository.saveAndFlush(amostra);
+            lista.add("id: " + amostra.getIdAmostra()+" - "+amostra.getNome());
         }
-        return amostras;
+        return lista;
     }
 
     @Autowired

@@ -3,11 +3,16 @@ package com.prolifera.app.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -16,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.prolifera.R;
+import com.google.zxing.WriterException;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.prolifera.app.JsonParser;
@@ -26,6 +32,9 @@ import com.prolifera.app.RequestQueueSingleton;
 
 import org.json.JSONObject;
 
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
+
 public class GenMainActivity extends AppCompatActivity {
 
     private RequestQueue rq;
@@ -33,6 +42,7 @@ public class GenMainActivity extends AppCompatActivity {
     private Usuario usuario;
     private Button btnGerarLote, btnVerGrafo, btnEtapas, btnBuscarAmostra;
     private TextView tvGenNameGenMain, tvUserLoggedGenMain;
+    private ImageView imgTesteQR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +96,7 @@ public class GenMainActivity extends AppCompatActivity {
         integrator.setBeepEnabled(true);
         integrator.setCameraId(0);
         integrator.initiateScan();
+
     }
 
     @Override
@@ -93,10 +104,40 @@ public class GenMainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode, data);
         String qrcode;
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
+        if (result != null ) {
             qrcode = result.getContents();
-            Log.i("qrcode",qrcode);
-            String url = "http://" + getResources().getString(R.string.server_address) + ":8080/api/prolifera/amostra/"+qrcode;
+
+           /* Log.i("teste","teste");
+            Bitmap basicQR = null, fancyQR = null, logo;
+            try {
+                QRGEncoder qrgEncoder = new QRGEncoder(qrcode, null, QRGContents.Type.TEXT, 500);
+                basicQR = qrgEncoder.encodeAsBitmap();Log.i("teste","teste");
+            }
+            catch (WriterException e) {
+                Log.i("error","WriterException "+e.getMessage());
+            }
+            logo = BitmapFactory.decodeResource(getResources(), R.drawable.qr_image);
+*/
+
+            /*float scaleWidth = ((float) 100) / logo.getWidth();
+            float scaleHeight = ((float) 100) / logo.getHeight();
+
+            Matrix matrix = new Matrix();
+            // RESIZE THE BIT MAP
+            matrix.postScale(scaleWidth, scaleHeight);
+
+            // "RECREATE" THE NEW BITMAP
+            logo = Bitmap.createBitmap(
+                    logo, 0, 0, 100, 100, matrix, false);
+
+            Log.i("teste","teste");/*/
+           /* fancyQR = Bitmap.createBitmap(basicQR.getWidth(), basicQR.getHeight(), basicQR.getConfig());
+            Canvas canvas = new Canvas(fancyQR);
+            canvas.drawBitmap(basicQR, 0f, 0f, null);
+            canvas.drawBitmap(logo, (basicQR.getWidth()-logo.getWidth())/2, (basicQR.getHeight()-logo.getHeight())/2, null);
+
+            imgTesteQR.setImageBitmap(fancyQR);*/
+            String url = getResources().getString(R.string.server_address) + "amostra/"+qrcode;
             JsonObjectRequest loginRequest = new JsonObjectRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override

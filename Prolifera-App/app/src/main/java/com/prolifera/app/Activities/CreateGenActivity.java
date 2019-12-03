@@ -64,10 +64,11 @@ public class CreateGenActivity extends AppCompatActivity {
         tvInfoNewGen.setVisibility(View.VISIBLE);
         processo.setLote(etGenName.getText().toString());
         processo.setUsuario(usuario.getLogin());
-        String url = "http://" + getResources().getString(R.string.server_address) + ":8080/api/prolifera/processo";
+        String url = getResources().getString(R.string.server_address) + "processo";
         JsonObjectRequest newGenRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    btnNextCreateGen.setEnabled(true);
                     if (response.equals(null)) return;
                     processoDTO = JsonParser.parseProcesso(response);
                     tvInfoNewGen.setText("Dados recebidos!");

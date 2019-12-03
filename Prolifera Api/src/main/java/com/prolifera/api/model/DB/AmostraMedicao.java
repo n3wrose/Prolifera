@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class AmostraMedicao {
+public class  AmostraMedicao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

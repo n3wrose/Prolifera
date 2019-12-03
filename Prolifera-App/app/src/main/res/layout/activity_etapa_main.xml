@@ -19,6 +19,7 @@
             android:background="@drawable/roundedbutton"
             android:backgroundTint="@color/colorPrimary"
             android:includeFontPadding="false"
+            android:onClick="novaMetrica"
             android:text="+"
             android:textAlignment="center"
             android:textColor="@android:color/white"
@@ -46,16 +47,6 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btnLogoutEtapaMain"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="Sair"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvUserLoggedEtapaMain" />
 
         <TextView
             android:id="@+id/tvEtapaNameEtapaMain"
@@ -91,43 +82,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Medidas cadastradas:"
+            android:text="Métricas cadastradas:"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAlterarStatus" />
 
         <TextView
-            android:id="@+id/tvQualifiersList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Qualificadores cadastrados:"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnCreateMetric" />
-
-        <TextView
             android:id="@+id/tvCreateMetric"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Cadastrar nova medida"
+            android:layout_marginStart="12dp"
+            android:onClick="novaMetrica"
+            android:text="Cadastrar nova métrica"
             android:textSize="20sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/btnCreateMetric"
             app:layout_constraintStart_toEndOf="@+id/btnCreateMetric" />
-
-        <ListView
-            android:id="@+id/lstQualifier"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:isScrollContainer="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvQualifiersList" />
 
         <ListView
             android:id="@+id/lstMetric"
@@ -142,34 +111,6 @@
             app:layout_constraintTop_toBottomOf="@+id/tvMetricsList" />
 
 
-        <Button
-            android:id="@+id/btnCreateQualifier"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/roundedbutton"
-            android:backgroundTint="@color/colorPrimary"
-            android:includeFontPadding="false"
-            android:text="+"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvQualifiersInfo" />
-
-        <TextView
-            android:id="@+id/tvCreateQualifier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Cadastrar novo qualificador"
-            android:textSize="20sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/btnCreateQualifier"
-            app:layout_constraintStart_toEndOf="@+id/btnCreateQualifier" />
-
         <TextView
             android:id="@+id/tvMetricsInfo"
             android:layout_width="wrap_content"
@@ -183,20 +124,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lstMetric" />
-
-        <TextView
-            android:id="@+id/tvQualifiersInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/roundedbutton"
-            android:backgroundTint="@android:color/holo_red_dark"
-            android:padding="3dp"
-            android:text="Sem qualificadores cadastrados!"
-            android:textColor="@android:color/white"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lstQualifier" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -22,6 +23,7 @@ import com.prolifera.app.Model.DB.Usuario;
 import com.prolifera.app.Model.DTO.EtapaDTO;
 import com.prolifera.app.Model.DTO.ProcessoDTO;
 import com.prolifera.app.RequestQueueSingleton;
+import com.prolifera.app.Utils;
 
 import org.json.JSONArray;
 
@@ -66,8 +68,10 @@ public class ManageEtapasActivity extends AppCompatActivity {
         etapas = new ArrayList<>();
         final ArrayAdapter<String> finalizadasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         lstEtapasFinalizadas.setAdapter(finalizadasAdapter);
+
         final ArrayAdapter<String> andamentoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         lstEtapasEmAndamento.setAdapter(andamentoAdapter);
+
         final ArrayAdapter<String> esperaAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         lstEtapasEmEspera.setAdapter(esperaAdapter);
 
@@ -103,9 +107,9 @@ public class ManageEtapasActivity extends AppCompatActivity {
         });
 
         //setting up ArrayRequest
-        String url = "http://" + getResources().getString(R.string.server_address) + ":8080/api/prolifera/etapa/"+processo.getIdProcesso();
+        String url = getResources().getString(R.string.server_address) + "etapa/"+processo.getIdProcesso();
 
-        JsonArrayRequest processosRequest = new JsonArrayRequest
+        JsonArrayRequest etapasRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
@@ -126,6 +130,7 @@ public class ManageEtapasActivity extends AppCompatActivity {
                                         break;
                                     case EtapaDTO.STATUS_EM_ESPERA:
                                         esperaAdapter.add(edto.getCodigo()+" - "+edto.getNome()+ ": Prevista para "+edto.getDataPrevista());
+                                        break;
                                     case EtapaDTO.STATUS_FINALIZADO:
                                         finalizadasAdapter.add(edto.getCodigo()+" - "+edto.getNome()+ ": Finalizada em "+edto.getDataFim());
                                 }
@@ -138,7 +143,7 @@ public class ManageEtapasActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                     }
                 });
-        rq.add(processosRequest);
+        rq.add(etapasRequest);
     }
 
     public void novaEtapa(View view) {

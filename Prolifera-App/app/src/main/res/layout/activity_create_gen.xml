@@ -28,7 +28,7 @@
             android:id="@+id/tvNewGenTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Novo Gen"
+            android:text="Novo Processo"
             android:textSize="40sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="64dp"
             android:text="Nome do lote:"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,15 +68,12 @@
 
         <EditText
             android:id="@+id/etGenName"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:textSize="25sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvEnterGenName"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvEnterGenName"
             tools:text="GEN" />
 
@@ -90,7 +87,7 @@
             android:layout_marginBottom="16dp"
             android:background="@color/colorPrimary"
             android:onClick="seguinte"
-            android:text="Seguinte"
+            android:text="Enviar"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"

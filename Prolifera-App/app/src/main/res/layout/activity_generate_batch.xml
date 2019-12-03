@@ -47,16 +47,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnLogoutGenerateBatch"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="Sair"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvUserLoggedGenerateBatch" />
-
         <TextView
             android:id="@+id/tvGenerateBatchTitle"
             android:layout_width="wrap_content"
@@ -190,10 +180,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:background="@color/colorPrimary"
+            android:enabled="false"
             android:onClick="gerarLote"
             android:text="Gerar Lote"
             android:textColor="@android:color/white"
@@ -238,9 +229,9 @@
             android:text="Os dados serão aplicados a todas as amostras geradas."
             android:textColor="@android:color/darker_gray"
             android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/btnGenerateBatch"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnGenerateBatch" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tvAmostraGenerateBatch"
@@ -250,9 +241,7 @@
             android:text="amostras"
             android:textColor="@android:color/darker_gray"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.485"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/etNumberGenerateBatch"
             app:layout_constraintTop_toBottomOf="@+id/etNumberGenerateBatch" />
 
         <TextView
@@ -263,10 +252,22 @@
             android:text="subamostras"
             android:textColor="@android:color/darker_gray"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.797"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvXGenerateBatch"
             app:layout_constraintTop_toBottomOf="@+id/etNumberSubGenerateBatch" />
+
+        <ListView
+            android:id="@+id/lstBatchedSamples"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvGenerateBatchHint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvGenerateBatchTitle"
+            tools:visibility="invisible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

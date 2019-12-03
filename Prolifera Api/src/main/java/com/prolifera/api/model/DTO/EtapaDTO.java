@@ -2,6 +2,7 @@ package com.prolifera.api.model.DTO;
 
 import com.prolifera.api.model.DB.Etapa;
 import com.prolifera.api.model.DB.Usuario;
+import com.prolifera.api.model.DTO.ProcessoDTO;
 
 import java.util.Date;
 

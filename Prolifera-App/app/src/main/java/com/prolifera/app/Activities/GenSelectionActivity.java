@@ -21,6 +21,7 @@ import com.prolifera.app.JsonParser;
 import com.prolifera.app.Model.DB.Usuario;
 import com.prolifera.app.Model.DTO.ProcessoDTO;
 import com.prolifera.app.RequestQueueSingleton;
+import com.prolifera.app.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,7 +32,7 @@ import java.util.List;
 public class GenSelectionActivity extends AppCompatActivity {
 
     Usuario usuario;
-    TextView tvUserLoggedGenSelection;
+    TextView tvUserLoggedGenSelection, tvCreateGen;
     List<ProcessoDTO> processos ;
     ListView lstGen;
     RequestQueue rq ;
@@ -44,6 +45,7 @@ public class GenSelectionActivity extends AppCompatActivity {
         //component attribution
         lstGen = findViewById(R.id.lstGen);
         tvUserLoggedGenSelection = findViewById(R.id.tvUserLoggedGenSelection);
+        tvCreateGen = findViewById(R.id.tvCreateGen);
 
         //RequestQueue instatiation
         rq = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
@@ -79,7 +81,7 @@ public class GenSelectionActivity extends AppCompatActivity {
             }
         });
         //setting up ArrayRequest
-        String url = "http://" + getResources().getString(R.string.server_address) + ":8080/api/prolifera/processo";
+        String url = getResources().getString(R.string.server_address) + "processo";
         JsonArrayRequest processosRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
@@ -91,7 +93,7 @@ public class GenSelectionActivity extends AppCompatActivity {
                             try {
                                 ProcessoDTO pdto = JsonParser.parseProcesso(response.getJSONObject(i));
                                 processos.add(pdto);
-                                processosAdapter.add(pdto.getLote()+ "  -  "+pdto.getTimestamp());
+                                processosAdapter.add(pdto.getLote()+ " iniciado em "+ Utils.toUserDate(pdto.getTimestamp()));
                             } catch (Exception e) { e.printStackTrace(); }
                         }
                     }
