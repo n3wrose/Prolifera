@@ -6,21 +6,21 @@ public class Opcao implements Serializable {
     
     
     private long idRegistro;
-    private long idClassificacao;
+    private long idQualificador;
     private String valor;
 
     public String fillPayload() {
         return "{ \"idRegistro\": "+idRegistro+"," +
-                "        \"idClassificacao\": "+idClassificacao+"," +
+                "        \"idQualificador\": "+idQualificador+"," +
                 "        \"valor\": \""+valor+"\" }" ;
     }
 
-    public long getIdClassificacao() {
-        return idClassificacao;
+    public long getIdQualificador() {
+        return idQualificador;
     }
 
-    public void setIdClassificacao(long idClassificacao) {
-        this.idClassificacao = idClassificacao;
+    public void setIdQualificador(long idQualificador) {
+        this.idQualificador = idQualificador;
     }
 
     public String getValor() {

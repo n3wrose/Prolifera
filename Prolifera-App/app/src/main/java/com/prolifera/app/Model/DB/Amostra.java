@@ -14,11 +14,12 @@ public class Amostra {
     private String usuario;
     private Date dataCriacao ;
     private Date dataFim;
+    private int numero;
 
     public String fillPayload() {
         return "{ \"dataCriacao\": \""+getDataCriacao()+"\", \"dataFim\": \""+getDataFim()+"\", " +
                 "\"nome\": \""+nome+"\", \"idAmostra\": "+idAmostra+", \"idEtapa\": "+idEtapa+", \"descricao\": " +
-                "\""+descricao+"\", \"usuario\":  \""+usuario+"\" }" ;
+                "\""+descricao+"\", \"usuario\":  \""+usuario+"\", \"numero\": "+numero+" }" ;
     }
 
     public long getIdAmostra() {
@@ -75,6 +76,14 @@ public class Amostra {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 }
 

@@ -9,6 +9,7 @@ import java.util.Date;
 
 @Entity
 public class Amostra {
+    private int numero;
     private String nome;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,7 @@ public class Amostra {
     public String fillPayload() {
         return "{ \"dataCriacao\": \""+getDataCriacao()+"\", \"dataFim\": \""+getDataFim()+"\", " +
                 "\"nome\": \""+nome+"\", \"idAmostra\": "+idAmostra+", \"idEtapa\": "+idEtapa+", \"descricao\": " +
-                "\""+descricao+"\", \"usuario\":  \""+usuario+"\" }" ;
+                "\""+descricao+"\", \"usuario\":  \""+usuario+"\", \"numero\": "+numero+" }" ;
     }
 
     public long getIdAmostra() {
@@ -79,6 +80,14 @@ public class Amostra {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 }
 

@@ -11,13 +11,14 @@ public class AmostraDTO {
     private String dataCriacao;
     private String dataFim;
     private String nome;
+    private int numero;
     private List<Long> idPais;
     private long idAmostra;
     private EtapaDTO etapa;
     private String descricao;
     private Usuario usuario;
-    private List<AmostraMedicaoDTO> medidas;
-    private List<AmostraClassificacaoDTO> classificacoes;
+    private List<AmostraQuantificadorDTO> medidas;
+    private List<AmostraQualificadorDTO> classificacoes;
     private List<AmostraSimples> filhos;
 
     public AmostraDTO() {}
@@ -28,6 +29,7 @@ public class AmostraDTO {
         idAmostra = amostra.getIdAmostra();
         descricao = amostra.getDescricao();
         dataFim = amostra.getDataFim();
+        numero = amostra.getNumero();
     }
 
     public List<AmostraSimples> getFilhos() {
@@ -38,11 +40,11 @@ public class AmostraDTO {
         this.filhos = filhos;
     }
 
-    public List<AmostraClassificacaoDTO> getClassificacoes() {
+    public List<AmostraQualificadorDTO> getClassificacoes() {
         return classificacoes;
     }
 
-    public void setClassificacoes(List<AmostraClassificacaoDTO> classificacoes) {
+    public void setClassificacoes(List<AmostraQualificadorDTO> classificacoes) {
         this.classificacoes = classificacoes;
     }
 
@@ -62,11 +64,11 @@ public class AmostraDTO {
         this.idPais = idPais;
     }
 
-    public List<AmostraMedicaoDTO> getMedidas() {
+    public List<AmostraQuantificadorDTO> getMedidas() {
         return medidas;
     }
 
-    public void setMedidas(List<AmostraMedicaoDTO> medidas) {
+    public void setMedidas(List<AmostraQuantificadorDTO> medidas) {
         this.medidas = medidas;
     }
 
@@ -116,5 +118,13 @@ public class AmostraDTO {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 }

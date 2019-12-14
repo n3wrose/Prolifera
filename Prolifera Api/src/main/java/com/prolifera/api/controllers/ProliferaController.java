@@ -143,57 +143,61 @@ public class ProliferaController {
     @PostMapping("/batch_amostra")
     public List<String> saveAmostra(@RequestBody SampleBatch sb) {
         Amostra a = sb.getAmostra();
+        int numero = amostraRepository.findLastSampleNumber(a.getIdEtapa());
         List<String> lista = new ArrayList<>();
-        for (int i = 0; i < sb.getSample(); i++)
-            for (int j=1; j < sb.getSubsample()+1 ; j++) {
-            Amostra amostra = new Amostra();
-            amostra.setNome(Character.toString((char)(i+65))+j);
-            amostra.setDataCriacao(new Date());
-            amostra.setDescricao(a.getDescricao());
-            amostra.setIdEtapa(a.getIdEtapa());
-            amostra.setUsuario(a.getUsuario());
-            amostra.setDataFim(null);
-            amostraRepository.saveAndFlush(amostra);
-            lista.add("id: " + amostra.getIdAmostra()+" - "+amostra.getNome());
+        for (int i = 0; i < sb.getSample(); i++) {
+            numero ++;
+            for (int j = 0; j < sb.getSubsample() ; j++) {
+                Amostra amostra = new Amostra();
+                amostra.setNumero(numero);
+                amostra.setNome(numero +"."+ Character.toString((char)(j+65)));
+                amostra.setDataCriacao(new Date());
+                amostra.setDescricao(a.getDescricao());
+                amostra.setIdEtapa(a.getIdEtapa());
+                amostra.setUsuario(a.getUsuario());
+                amostra.setDataFim(null);
+                amostraRepository.saveAndFlush(amostra);
+                lista.add("id: " + amostra.getIdAmostra() + " - " + amostra.getNome());
+            }
         }
         return lista;
     }
 
     @Autowired
-    MedicaoRepository medicaoRepository;
+    QuantificadorRepository quantificadorRepository;
 
-    @PostMapping("/medicao")
-    public Medicao saveMedicao(@RequestBody Medicao medicao) {
-        return medicaoRepository.saveAndFlush(medicao);
+    @PostMapping("/Quantificador")
+    public Quantificador saveQuantificador(@RequestBody Quantificador quantificador) {
+        return quantificadorRepository.saveAndFlush(quantificador);
     }
-    @GetMapping("/medicao")
-    public List<Medicao> listMedicao(){
-        return medicaoRepository.findAll();
+    @GetMapping("/Quantificador")
+    public List<Quantificador> listQuantificador(){
+        return quantificadorRepository.findAll();
     }
 
     @Autowired
-    AmostraMedicaoRepository amRepository;
+    AmostraQuantificadorRepository amRepository;
 
-    @PostMapping("/amostra_medicao")
-    public AmostraMedicao saveAmostraMedicao(@RequestBody AmostraMedicao am) {
+    @PostMapping("/amostra_Quantificador")
+    public AmostraQuantificador saveAmostraQuantificador(@RequestBody AmostraQuantificador am) {
         am.setTimestamp(new Date());
         System.out.println(am.fillPayload());
         return amRepository.saveAndFlush(am);
     }
 
     @Autowired
-    ClassificacaoRepository classificacaoRepository;
+    QualificadorRepository qualificadorRepository;
 
-    @PostMapping("/classificacao")
-    public Classificacao saveClassificacao(@RequestBody Classificacao classificacao) {
-        System.out.println(classificacao.fillPayload());
-        return classificacaoRepository.saveAndFlush(classificacao);
+    @PostMapping("/Qualificador")
+    public Qualificador saveQualificador(@RequestBody Qualificador qualificador) {
+        System.out.println(qualificador.fillPayload());
+        return qualificadorRepository.saveAndFlush(qualificador);
     }
-    @GetMapping("/classificacao")
-    public List<ClassificacaoDTO> listClassificacao() {
-        List<ClassificacaoDTO> cdtoList = new ArrayList<ClassificacaoDTO>();
-        for (Classificacao c : classificacaoRepository.findAll())
-            cdtoList.add(fillClassificacao(c));
+    @GetMapping("/Qualificador")
+    public List<QualificadorDTO> listQualificador() {
+        List<QualificadorDTO> cdtoList = new ArrayList<QualificadorDTO>();
+        for (Qualificador c : qualificadorRepository.findAll())
+            cdtoList.add(fillQualificador(c));
         return cdtoList;
     }
 
@@ -210,21 +214,21 @@ public class ProliferaController {
     public List<Opcao> listOpcao() { return opcaoRepository.findAll(); }
 
     @Autowired
-    AmostraClassificacaoRepository acRepository;
+    AmostraQualificadorRepository acRepository;
 
-    @PostMapping("/amostra_classificacao")
-    public AmostraClassificacao saveAc(@RequestBody AmostraClassificacao ac) {
+    @PostMapping("/amostra_Qualificador")
+    public AmostraQualificador saveAc(@RequestBody AmostraQualificador ac) {
         ac.setTimestamp(new Date());
         System.out.println(ac.fillPayload());
         return acRepository.saveAndFlush(ac);
     }
 
-    @GetMapping("/amostra_classificacao")
-    public List<AmostraClassificacaoDTO> listAc() {
-        List<AmostraClassificacaoDTO> acdtoList = new ArrayList<AmostraClassificacaoDTO>();
-        for (AmostraClassificacao ac : acRepository.findAll()) {
-            AmostraClassificacaoDTO acdto = new AmostraClassificacaoDTO(ac);
-            acdto.setClassificacaoDTO(fillClassificacao(classificacaoRepository.findById(ac.getIdClassificacao()).get()));
+    @GetMapping("/amostra_Qualificador")
+    public List<AmostraQualificadorDTO> listAc() {
+        List<AmostraQualificadorDTO> acdtoList = new ArrayList<AmostraQualificadorDTO>();
+        for (AmostraQualificador ac : acRepository.findAll()) {
+            AmostraQualificadorDTO acdto = new AmostraQualificadorDTO(ac);
+            acdto.setQualificadorDTO(fillQualificador(qualificadorRepository.findById(ac.getIdQualificador()).get()));
             acdtoList.add(acdto);
         }
         return acdtoList;
@@ -240,8 +244,8 @@ public class ProliferaController {
         return amostraPaiRepository.save(ap);
     }
 
-    private ClassificacaoDTO fillClassificacao(Classificacao c) {
-        ClassificacaoDTO cdto = new ClassificacaoDTO(c);
+    private QualificadorDTO fillQualificador(Qualificador c) {
+        QualificadorDTO cdto = new QualificadorDTO(c);
         List<Opcao> opcoes = new ArrayList<Opcao>();
         for (Opcao op : opcaoRepository.findAll())
             opcoes.add(op);
@@ -253,17 +257,17 @@ public class ProliferaController {
         AmostraDTO adto = new AmostraDTO(a);
         adto.setEtapa(fillEtapa(etapaRepository.findById(a.getIdEtapa()).get()));
         adto.setUsuario(userRepository.findById(a.getUsuario()).get());
-        List<AmostraMedicaoDTO> amdtoList = new ArrayList<AmostraMedicaoDTO>();
-        for (AmostraMedicao am : amRepository.findByIdAmostra(a.getIdAmostra())) {
-            AmostraMedicaoDTO amdto = new AmostraMedicaoDTO(am);
-            amdto.setMedicao(medicaoRepository.findById(am.getIdMedicao()).get());
-           // amdto.setTexto(amdto.getMedicao().getNome()+": "+amdto.getValor()+" "+amdto.getMedicao().getUnidade());
+        List<AmostraQuantificadorDTO> amdtoList = new ArrayList<AmostraQuantificadorDTO>();
+        for (AmostraQuantificador am : amRepository.findByIdAmostra(a.getIdAmostra())) {
+            AmostraQuantificadorDTO amdto = new AmostraQuantificadorDTO(am);
+            amdto.setQuantificador(quantificadorRepository.findById(am.getIdQuantificador()).get());
+           // amdto.setTexto(amdto.getQuantificador().getNome()+": "+amdto.getValor()+" "+amdto.getQuantificador().getUnidade());
             amdtoList.add(amdto);
         }
-        List<AmostraClassificacaoDTO> acdtoList = new ArrayList<AmostraClassificacaoDTO>();
-        for (AmostraClassificacao ac : acRepository.findByIdAmostra(a.getIdAmostra())) {
-            AmostraClassificacaoDTO acdto = new AmostraClassificacaoDTO(ac);
-            acdto.setClassificacaoDTO(fillClassificacao(classificacaoRepository.findById(ac.getIdClassificacao()).get()));
+        List<AmostraQualificadorDTO> acdtoList = new ArrayList<AmostraQualificadorDTO>();
+        for (AmostraQualificador ac : acRepository.findByIdAmostra(a.getIdAmostra())) {
+            AmostraQualificadorDTO acdto = new AmostraQualificadorDTO(ac);
+            acdto.setQualificadorDTO(fillQualificador(qualificadorRepository.findById(ac.getIdQualificador()).get()));
             acdtoList.add(acdto);
         }
         adto.setMedidas(amdtoList);
@@ -284,14 +288,14 @@ public class ProliferaController {
         AmostraSimples asdto = new AmostraSimples(a);
         asdto.setEtapa(etapaRepository.findById(a.getIdEtapa()).get());
         List<String> atributos = new ArrayList<String>();
-        for (AmostraMedicao am : amRepository.findByIdAmostra(a.getIdAmostra())) {
-            AmostraMedicaoDTO amdto = new AmostraMedicaoDTO(am);
-            amdto.setMedicao(medicaoRepository.findById(am.getIdMedicao()).get());
+        for (AmostraQuantificador am : amRepository.findByIdAmostra(a.getIdAmostra())) {
+            AmostraQuantificadorDTO amdto = new AmostraQuantificadorDTO(am);
+            amdto.setQuantificador(quantificadorRepository.findById(am.getIdQuantificador()).get());
             atributos.add(amdto.getTexto());
         }
-        for (AmostraClassificacao ac : acRepository.findByIdAmostra(a.getIdAmostra())) {
-            AmostraClassificacaoDTO acdto = new AmostraClassificacaoDTO(ac);
-            acdto.setClassificacaoDTO(fillClassificacao(classificacaoRepository.findById(ac.getIdClassificacao()).get()));
+        for (AmostraQualificador ac : acRepository.findByIdAmostra(a.getIdAmostra())) {
+            AmostraQualificadorDTO acdto = new AmostraQualificadorDTO(ac);
+            acdto.setQualificadorDTO(fillQualificador(qualificadorRepository.findById(ac.getIdQualificador()).get()));
             atributos.add(acdto.getTexto());
         }
         asdto.setAtributos(atributos);

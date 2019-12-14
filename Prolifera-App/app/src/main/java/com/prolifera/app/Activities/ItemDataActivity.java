@@ -13,45 +13,32 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.prolifera.R;
 import com.prolifera.app.JsonParser;
 import com.prolifera.app.Model.DB.Amostra;
-import com.prolifera.app.Model.DB.AmostraClassificacao;
-import com.prolifera.app.Model.DB.AmostraMedicao;
 import com.prolifera.app.Model.DB.Usuario;
-import com.prolifera.app.Model.DTO.AmostraClassificacaoDTO;
+import com.prolifera.app.Model.DTO.AmostraQualificadorDTO;
 import com.prolifera.app.Model.DTO.AmostraDTO;
-import com.prolifera.app.Model.DTO.AmostraMedicaoDTO;
-import com.prolifera.app.Model.DTO.ProcessoDTO;
+import com.prolifera.app.Model.DTO.AmostraQuantificadorDTO;
 import com.prolifera.app.RequestQueueSingleton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Hashtable;
-import java.util.Map;
 
 public class ItemDataActivity extends AppCompatActivity {
 
@@ -100,9 +87,9 @@ public class ItemDataActivity extends AppCompatActivity {
     private void updateMetricsList() {
         final ArrayAdapter<String> metricsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         lstMeasurement.setAdapter(metricsAdapter);
-        for (AmostraMedicaoDTO am : amostra.getMedidas())
+        for (AmostraQuantificadorDTO am : amostra.getMedidas())
             metricsAdapter.add(am.getTexto());
-        for (AmostraClassificacaoDTO ac : amostra.getClassificacoes())
+        for (AmostraQualificadorDTO ac : amostra.getClassificacoes())
             metricsAdapter.add(ac.getTexto());
     }
 
