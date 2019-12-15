@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.prolifera.app.Fragments.ListEtapasFragment">
+
+    <ListView
+        android:id="@+id/lstEtapas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_weight="1"
+        android:nestedScrollingEnabled="true"
+        android:scrollbarSize="4dp" />
+
+    <TextView
+        android:id="@+id/tvEtapasHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:background="@drawable/roundedbutton"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:padding="3dp"
+        android:text="Sem etapas em andamento!"
+        android:textColor="@android:color/white"
+        android:visibility="invisible" />
+</LinearLayout>

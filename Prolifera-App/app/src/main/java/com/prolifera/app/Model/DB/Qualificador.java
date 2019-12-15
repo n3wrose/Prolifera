@@ -8,10 +8,6 @@ public class Qualificador {
     private String nome;
     private boolean aberto;
 
-    public String fillPayload() {
-        return " { \"idQualificador\": "+idQualificador+", \"nome\": \""+nome+"\", \"aberto\": "+aberto+", " +
-                "\"idEtapa\": "+idEtapa+" }";
-    }
 
     public long getIdEtapa() {
         return idEtapa;

@@ -75,12 +75,6 @@ public class CreateEtapaActivity extends AppCompatActivity {
         etEtapaDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-              /*
-            }
-        });
-        etEtapaDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {*/
                 if (etEtapaDate.isFocused())
                     new DatePickerDialog(CreateEtapaActivity.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
@@ -130,8 +124,6 @@ public class CreateEtapaActivity extends AppCompatActivity {
         } else
             etapa.setStatus(Etapa.STATUS_EM_ESPERA);
         etapa.setDataPrevista(new Date());
-
-        Log.i("teste",etapa.fillPayload());
         String url = getResources().getString(R.string.server_address) + "etapa";
 
         JsonObjectRequest newEtapaRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
@@ -179,7 +171,6 @@ public class CreateEtapaActivity extends AppCompatActivity {
     }
 
 
-
     public void switchEqp(View view) {
 
         if (swtEquipament.isChecked()) {
@@ -191,6 +182,7 @@ public class CreateEtapaActivity extends AppCompatActivity {
             etEtapaEquipament.setVisibility(View.INVISIBLE);
         }
     }
+
 
 
 

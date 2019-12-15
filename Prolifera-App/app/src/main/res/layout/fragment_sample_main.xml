@@ -47,11 +47,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:text="Pai(s):"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnTirarFoto" />
+            app:layout_constraintTop_toBottomOf="@+id/btnPhotoPrevious" />
 
         <ListView
             android:id="@+id/lstParentItemData"
@@ -66,22 +66,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAddedParentsItemData" />
-
-        <Button
-            android:id="@+id/btnTirarFoto"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/colorPrimary"
-            android:text="Adicionar Foto"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnPhotoNext" />
 
         <Button
             android:id="@+id/btnAdicionarPai"
@@ -121,7 +105,39 @@
             android:textColor="@android:color/white"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgSampleItemData" />
+
+        <Button
+            android:id="@+id/btnPhotoGallery"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableLeft="@drawable/gallery"
+            android:includeFontPadding="false"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="50sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.62"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgSampleItemData" />
+
+        <Button
+            android:id="@+id/btnTakePhoto"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableLeft="@drawable/camera"
+            android:includeFontPadding="false"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="50sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.37"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgSampleItemData" />
 
@@ -137,7 +153,7 @@
             android:textColor="@android:color/white"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgSampleItemData" />
     </androidx.constraintlayout.widget.ConstraintLayout>

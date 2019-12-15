@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -22,21 +20,11 @@
             app:layout_constraintTop_toBottomOf="@+id/tvNewMetricsQuantifier" />
 
         <TextView
-            android:id="@+id/tvInfoQuantifier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Info qualificador"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvEnterQuantifierUnity" />
-
-        <TextView
             android:id="@+id/tvEnterQuantifierUnity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:text="Unidade:"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,20 +57,24 @@
 
         <Button
             android:id="@+id/btnCreateQuantifier"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Criar quantificador"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/colorPrimary"
+            android:text="CONFIRMAR"
+            android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvInfoQuantifier" />
+            app:layout_constraintTop_toBottomOf="@+id/etQuantifierUnity" />
 
         <TextView
             android:id="@+id/tvNewMetricsQuantifier"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="Criar quantificador"
             android:textSize="30sp"

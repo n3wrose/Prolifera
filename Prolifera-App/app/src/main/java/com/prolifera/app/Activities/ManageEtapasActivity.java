@@ -1,12 +1,12 @@
 package com.prolifera.app.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -18,12 +18,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.prolifera.R;
+import com.google.android.material.tabs.TabLayout;
+import com.prolifera.app.Fragments.ListEtapasFragment;
+import com.prolifera.app.Fragments.QualifierFragment;
+import com.prolifera.app.Fragments.QuantifierFragment;
 import com.prolifera.app.JsonParser;
+import com.prolifera.app.Model.DB.Etapa;
 import com.prolifera.app.Model.DB.Usuario;
 import com.prolifera.app.Model.DTO.EtapaDTO;
 import com.prolifera.app.Model.DTO.ProcessoDTO;
 import com.prolifera.app.RequestQueueSingleton;
-import com.prolifera.app.Utils;
+import com.prolifera.app.TabAdapter;
 
 import org.json.JSONArray;
 
@@ -34,8 +39,11 @@ public class ManageEtapasActivity extends AppCompatActivity {
 
     private TextView tvUserLoggedManageEtapas, tvEtapasListTitle;
     private ListView lstEtapasFinalizadas, lstEtapasEmAndamento, lstEtapasEmEspera;
-    private Usuario usuario;
-    private ProcessoDTO processo;
+    public Usuario usuario;
+    private ViewPager vpEtapas;
+    private TabLayout tabEtapas;
+    private TabAdapter tabAdapter;
+    public ProcessoDTO processo;
     private List<EtapaDTO> etapas;
     private RequestQueue rq;
 
@@ -46,10 +54,12 @@ public class ManageEtapasActivity extends AppCompatActivity {
 
         //component attribution
         tvUserLoggedManageEtapas = findViewById(R.id.tvUserLoggedManageEtapas);
-        tvEtapasListTitle = findViewById(R.id.tvEtapasListTitle);
-        lstEtapasEmAndamento = findViewById(R.id.lstEtapasEmAndamento);
+        tabEtapas = findViewById(R.id.tabEtapas);
+        vpEtapas = findViewById(R.id.vpEtapas);
+        tvEtapasListTitle = findViewById(R.id.tvEtapasListTitle); /*
+        lstEtapasEmAndamento = findViewById(R.id.lstEtapas);
         lstEtapasFinalizadas = findViewById(R.id.lstEtapasFinalizadas);
-        lstEtapasEmEspera = findViewById(R.id.lstEtapasEmEspera);
+        lstEtapasEmEspera = findViewById(R.id.lstEtapasEmEspera);*/
 
         // intent parameters retrieval
         usuario = (Usuario)getIntent().getExtras().get("usuario");
@@ -60,10 +70,20 @@ public class ManageEtapasActivity extends AppCompatActivity {
 
         tvEtapasListTitle.setText("ETAPAS - " + processo.getLote());
         tvUserLoggedManageEtapas.setText("Logado como: "+usuario.getNome());
-        updateEtapas();
+
+        tabAdapter = new TabAdapter(getSupportFragmentManager());
+        tabAdapter.add(new ListEtapasFragment(Etapa.STATUS_EM_ESPERA), "Espera");
+        tabAdapter.add(new ListEtapasFragment(Etapa.STATUS_EM_ANDAMENTO), "Andamento");
+        tabAdapter.add(new ListEtapasFragment(Etapa.STATUS_FINALIZADO), "Finalizado");
+
+        vpEtapas.setAdapter(tabAdapter);
+        tabEtapas.setupWithViewPager(vpEtapas);
+
+
+       /// updateEtapas();
     }
 
-    private void updateEtapas() {
+    /*private void updateEtapas() {
 
         etapas = new ArrayList<>();
         final ArrayAdapter<String> finalizadasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
@@ -144,13 +164,13 @@ public class ManageEtapasActivity extends AppCompatActivity {
                     }
                 });
         rq.add(etapasRequest);
-    }
+    }*/
 
     public void novaEtapa(View view) {
         Intent intent = new Intent(ManageEtapasActivity.this,CreateEtapaActivity.class);
         intent.putExtra("processo", processo);
         intent.putExtra("usuario",usuario);
         startActivity(intent);
-        updateEtapas();
+
     }
 }

@@ -11,6 +11,7 @@ public class QualificadorDTO {
     private long idQualificador;
     private String nome;
     private boolean aberto;
+    private long idEtapa;
     private List<Opcao> opcoes;
 
     public QualificadorDTO(Qualificador qualificador)
@@ -18,6 +19,7 @@ public class QualificadorDTO {
         idQualificador = qualificador.getIdQualificador();
         nome = qualificador.getNome();
         aberto = qualificador.isAberto();
+        idEtapa = qualificador.getIdEtapa();
     }
 
     public QualificadorDTO() { }
@@ -52,5 +54,13 @@ public class QualificadorDTO {
 
     public void setOpcoes(List<Opcao> opcoes) {
         this.opcoes = opcoes;
+    }
+
+    public long getIdEtapa() {
+        return idEtapa;
+    }
+
+    public void setIdEtapa(long idEtapa) {
+        this.idEtapa = idEtapa;
     }
 }

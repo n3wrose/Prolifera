@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.prolifera.app.Activities.CreateMetricsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +26,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logo_noname" />
@@ -41,21 +42,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnNextCreateMetrics"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/colorPrimary"
-            android:text="Finalizar"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vpMetrics" />
-
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabMetrica"
             android:layout_width="match_parent"
@@ -63,17 +49,20 @@
             android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNewMetricsTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNewMetricsTitle"
+            app:tabBackground="@color/colorPrimary"
+            app:tabTextColor="@android:color/white" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vpMetrics"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tabMetrica" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+</LinearLayout>

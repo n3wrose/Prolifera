@@ -1,130 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.prolifera.app.Activities.EtapaMainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/tvQualifierHint3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clique para alterar o status da Etapa"
+        app:layout_constraintBottom_toTopOf="@+id/btnAlterarStatus"
+        app:layout_constraintEnd_toEndOf="@+id/btnAlterarStatus"
+        app:layout_constraintStart_toStartOf="@+id/btnAlterarStatus"
+        app:layout_constraintTop_toBottomOf="@+id/swtOpenQualifier" />
+
+    <ImageView
+        android:id="@+id/imgLogoEtapaMain"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_noname" />
+
+    <TextView
+        android:id="@+id/tvMetricsList"
+        android:layout_width="251dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Métricas cadastradas:"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCreateMetric" />
+
+    <TextView
+        android:id="@+id/tvEtapaMainGen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="GEN xx - R0"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLogoEtapaMain" />
+
+    <TextView
+        android:id="@+id/tvCreateMetric"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:onClick="novaMetrica"
+        android:text="Cadastrar nova métrica"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnCreateMetric"
+        app:layout_constraintStart_toEndOf="@+id/btnCreateMetric"
+        app:layout_constraintTop_toTopOf="@+id/btnCreateMetric" />
+
+    <TextView
+        android:id="@+id/tvUserLoggedEtapaMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Logado como: user"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/lstMetric"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:isScrollContainer="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMetricsList" >
 
-        <Button
-            android:id="@+id/btnCreateMetric"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/roundedbutton"
-            android:backgroundTint="@color/colorPrimary"
-            android:includeFontPadding="false"
-            android:onClick="novaMetrica"
-            android:text="+"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMetricsInfo" />
+    </ListView>
 
-        <ImageView
-            android:id="@+id/imgLogoEtapaMain"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo_noname" />
+    <TextView
+        android:id="@+id/tvEtapaMainName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Etapa Name"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="@+id/tvEtapaMainGen"
+        app:layout_constraintTop_toBottomOf="@+id/tvEtapaMainGen" />
 
-        <TextView
-            android:id="@+id/tvUserLoggedEtapaMain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="Logado como: user"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/btnAlterarStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/colorPrimary"
+        android:onClick="alterarStatus"
+        android:text="Alterar Status"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEtapaMainName" />
 
-        <TextView
-            android:id="@+id/tvEtapaNameEtapaMain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Etapa etapa"
-            android:textSize="50sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgLogoEtapaMain" />
+    <Button
+        android:id="@+id/btnCreateMetric"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/roundedbutton"
+        android:backgroundTint="@color/colorPrimary"
+        android:includeFontPadding="false"
+        android:onClick="novaMetrica"
+        android:text="+"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAlterarStatus" />
 
-        <Button
-            android:id="@+id/btnAlterarStatus"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/colorPrimary"
-            android:text="Alterar Status"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvEtapaNameEtapaMain"
-            app:layout_constraintVertical_bias="0.0" />
+    <TextView
+        android:id="@+id/tvMetricsInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundedbutton"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:padding="3dp"
+        android:text="Sem medidas cadastradas!"
+        android:textColor="@android:color/white"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMetricsList" />
 
-        <TextView
-            android:id="@+id/tvMetricsList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Métricas cadastradas:"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnAlterarStatus" />
-
-        <TextView
-            android:id="@+id/tvCreateMetric"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:onClick="novaMetrica"
-            android:text="Cadastrar nova métrica"
-            android:textSize="20sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/btnCreateMetric"
-            app:layout_constraintStart_toEndOf="@+id/btnCreateMetric" />
-
-        <ListView
-            android:id="@+id/lstMetric"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:isScrollContainer="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMetricsList" />
-
-
-        <TextView
-            android:id="@+id/tvMetricsInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/roundedbutton"
-            android:backgroundTint="@android:color/holo_red_dark"
-            android:padding="3dp"
-            android:text="Sem medidas cadastradas!"
-            android:textColor="@android:color/white"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lstMetric" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

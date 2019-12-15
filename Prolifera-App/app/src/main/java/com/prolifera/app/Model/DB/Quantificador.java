@@ -10,7 +10,7 @@ public class Quantificador implements Serializable {
     private String nome;
     private String unidade;
 
-    public String geyPayload() {
+    public String fillPayload() {
         return "{" +
                 " \"idQuantificador\": "+idQuantificador+"," +
                 " \"idEtapa\": "+idEtapa+"," +

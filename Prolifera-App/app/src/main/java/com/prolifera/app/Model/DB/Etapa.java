@@ -1,5 +1,8 @@
 package com.prolifera.app.Model.DB;
 
+import com.prolifera.app.Model.DTO.EtapaDTO;
+import com.prolifera.app.Utils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -36,6 +39,23 @@ public class Etapa {
                 "        \"dataInicio\": \""+ getDataInicio() +"\",\n" +
                 "        \"dataPrevista\": \""+ getDataPrevista() +"\"\n" +
                 "    }";
+    }
+
+    public Etapa() {}
+
+    public Etapa(EtapaDTO edto) {
+        codigo = edto.getCodigo();
+        nome = edto.getNome();
+        idEtapa = edto.getIdEtapa();
+        idProcesso = edto.getProcesso().getIdProcesso();
+        equipamento = edto.getEquipamento();
+        status = edto.getStatus();
+        usuario = edto.getUsuario().getLogin();
+        descricao = edto.getDescricao();
+        dataFim = Utils.stringToDate(edto.getDataFim());
+        dataInicio = Utils.stringToDate(edto.getDataInicio());
+        dataPrevista = Utils.stringToDate(edto.getDataPrevista());
+        timestamp = Utils.stringToDate(edto.getTimestamp());
     }
 
     public String getDataFim() {

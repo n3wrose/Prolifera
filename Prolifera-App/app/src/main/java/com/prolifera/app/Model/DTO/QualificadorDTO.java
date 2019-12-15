@@ -10,6 +10,7 @@ import java.util.List;
 public class QualificadorDTO implements Serializable {
 
     private long idQualificador;
+    private long idEtapa;
     private String nome;
     private boolean aberto;
     private List<Opcao> opcoes;
@@ -22,6 +23,19 @@ public class QualificadorDTO implements Serializable {
     }
 
     public QualificadorDTO() { }
+
+    public String fillPayload() {
+        String retorno = " { \"idQualificador\": "+idQualificador+", \"nome\": \""+nome+"\", \"aberto\": "+aberto+", " +
+                "\"idEtapa\": "+idEtapa+", \"opcoes\": [ " ;
+
+        for (Opcao op : opcoes) {
+            retorno = retorno +" "+ op.fillPayload() + "," ;
+
+        }
+        retorno = retorno.substring(0,retorno.length()-1) +  "] }";
+
+        return retorno;
+    }
 
     public long getIdQualificador() {
         return idQualificador;
@@ -53,5 +67,13 @@ public class QualificadorDTO implements Serializable {
 
     public void setOpcoes(List<Opcao> opcoes) {
         this.opcoes = opcoes;
+    }
+
+    public long getIdEtapa() {
+        return idEtapa;
+    }
+
+    public void setIdEtapa(long idEtapa) {
+        this.idEtapa = idEtapa;
     }
 }

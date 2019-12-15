@@ -9,6 +9,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <Switch
+                android:id="@+id/swtOpenQualifier"
+                android:layout_width="0dp"
+                android:layout_height="39dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="Aberto"
+                android:textColor="#6B6B6B"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvQualifierHint" />
+
             <EditText
                 android:id="@+id/etQualifierName"
                 android:layout_width="0dp"
@@ -26,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="Opções: "
                 android:textSize="25sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -34,23 +49,19 @@
 
             <Button
                 android:id="@+id/btnCreateQualifier"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Criar qualificador"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
+                android:background="@color/colorPrimary"
+                android:text="CONFIRMAR"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvInfoQualifier" />
-
-            <TextView
-                android:id="@+id/tvInfoQualifier"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Info qualificador"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvEnterQualifierOptions" />
+                app:layout_constraintTop_toBottomOf="@+id/tvQualifierHint2" />
 
             <TextView
                 android:id="@+id/tvEnterQualifierName"
@@ -68,7 +79,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="Criar qualificador"
                 android:textSize="30sp"
@@ -78,7 +89,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/metOpcoes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -90,13 +101,21 @@
                 app:layout_constraintStart_toEndOf="@+id/tvEnterQualifierOptions"
                 app:layout_constraintTop_toTopOf="@+id/tvEnterQualifierOptions" />
 
-            <Switch
-                android:id="@+id/switch1"
+            <TextView
+                android:id="@+id/tvQualifierHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Switch"
-                tools:layout_editor_absoluteX="59dp"
-                tools:layout_editor_absoluteY="229dp" />
+                android:text="Opções separadas por Enter"
+                app:layout_constraintStart_toStartOf="@+id/metOpcoes"
+                app:layout_constraintTop_toBottomOf="@+id/metOpcoes" />
+
+            <TextView
+                android:id="@+id/tvQualifierHint2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='"Aberto" permite uma opção diferente das cadastradas'
+                app:layout_constraintStart_toStartOf="@+id/swtOpenQualifier"
+                app:layout_constraintTop_toBottomOf="@+id/swtOpenQualifier" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

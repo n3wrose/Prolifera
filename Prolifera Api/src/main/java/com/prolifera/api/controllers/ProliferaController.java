@@ -114,6 +114,23 @@ public class ProliferaController {
         return adto;
     }
 
+    @GetMapping("/metrics/{id}")
+    public List<Object> getMetrics(@PathVariable("id") long idEtapa) {
+        List<Object> metrics = new ArrayList<>();
+        for (Quantificador q : quantificadorRepository.findByIdEtapa(idEtapa))
+            metrics.add(q);
+        for (Qualificador q : qualificadorRepository.findByIdEtapa(idEtapa)) {
+            QualificadorDTO qdto = new QualificadorDTO(q);
+            List<Opcao> opcoes = new ArrayList<>();
+            for (Opcao op : opcaoRepository.findByIdQualificador(q.getIdQualificador()))
+                opcoes.add(op);
+            qdto.setOpcoes(opcoes);
+            metrics.add(qdto);
+        }
+
+        return metrics;
+    }
+
     @GetMapping("/amostra_simples")
     public List<AmostraSimples> listAmostrasSimples(){
         List<AmostraSimples> amostras = new ArrayList<AmostraSimples>();
@@ -166,11 +183,11 @@ public class ProliferaController {
     @Autowired
     QuantificadorRepository quantificadorRepository;
 
-    @PostMapping("/Quantificador")
+    @PostMapping("/quantificador")
     public Quantificador saveQuantificador(@RequestBody Quantificador quantificador) {
         return quantificadorRepository.saveAndFlush(quantificador);
     }
-    @GetMapping("/Quantificador")
+    @GetMapping("/quantificador")
     public List<Quantificador> listQuantificador(){
         return quantificadorRepository.findAll();
     }
@@ -178,7 +195,7 @@ public class ProliferaController {
     @Autowired
     AmostraQuantificadorRepository amRepository;
 
-    @PostMapping("/amostra_Quantificador")
+    @PostMapping("/amostra_quantificador")
     public AmostraQuantificador saveAmostraQuantificador(@RequestBody AmostraQuantificador am) {
         am.setTimestamp(new Date());
         System.out.println(am.fillPayload());
@@ -188,12 +205,23 @@ public class ProliferaController {
     @Autowired
     QualificadorRepository qualificadorRepository;
 
-    @PostMapping("/Qualificador")
-    public Qualificador saveQualificador(@RequestBody Qualificador qualificador) {
-        System.out.println(qualificador.fillPayload());
-        return qualificadorRepository.saveAndFlush(qualificador);
+    @PostMapping("/qualificador")
+    public QualificadorDTO saveQualificador(@RequestBody QualificadorDTO qdto) {
+        Qualificador q = new Qualificador();
+        List<Opcao> opcoes = new ArrayList<>();
+        q.setNome(qdto.getNome());
+        q.setAberto(qdto.isAberto());
+        q.setIdEtapa(qdto.getIdEtapa());
+        QualificadorDTO Qdto = new QualificadorDTO(qualificadorRepository.saveAndFlush(q));
+        for (Opcao op : qdto.getOpcoes())  {
+            op.setIdQualificador(q.getIdQualificador());
+            opcaoRepository.saveAndFlush(op);
+            opcoes.add(op);
+        }
+        Qdto.setOpcoes(opcoes);
+        return Qdto;
     }
-    @GetMapping("/Qualificador")
+    @GetMapping("/qualificador")
     public List<QualificadorDTO> listQualificador() {
         List<QualificadorDTO> cdtoList = new ArrayList<QualificadorDTO>();
         for (Qualificador c : qualificadorRepository.findAll())
@@ -216,14 +244,14 @@ public class ProliferaController {
     @Autowired
     AmostraQualificadorRepository acRepository;
 
-    @PostMapping("/amostra_Qualificador")
+    @PostMapping("/amostra_qualificador")
     public AmostraQualificador saveAc(@RequestBody AmostraQualificador ac) {
         ac.setTimestamp(new Date());
         System.out.println(ac.fillPayload());
         return acRepository.saveAndFlush(ac);
     }
 
-    @GetMapping("/amostra_Qualificador")
+    @GetMapping("/amostra_qualificador")
     public List<AmostraQualificadorDTO> listAc() {
         List<AmostraQualificadorDTO> acdtoList = new ArrayList<AmostraQualificadorDTO>();
         for (AmostraQualificador ac : acRepository.findAll()) {
