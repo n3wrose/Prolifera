@@ -49,14 +49,12 @@ import java.util.Date;
 
 public class ItemDataActivity extends AppCompatActivity {
 
-    private int PICK_IMAGE_REQUEST = 5;
     private RequestQueue rq;
-    private Button btnDestruirAmostra, btnTirarFoto;
     private TextView tvItemNameItemData, tvEtapaItemData, tvUserLoggedItemData;
     private ListView lstMeasurement, lstParentItemData;
     private ViewPager vpItemData;
     private TabLayout tabItemData;
-    private AmostraDTO amostra;
+    public AmostraDTO amostra;
     private Usuario usuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +65,6 @@ public class ItemDataActivity extends AppCompatActivity {
         tvEtapaItemData = findViewById(R.id.tvEtapaItemData);
         tvUserLoggedItemData = findViewById(R.id.tvUserLoggedItemData);
         lstParentItemData = findViewById(R.id.lstParentItemData);
-        btnDestruirAmostra = findViewById(R.id.btnDestruirAmostra);
 
         usuario = (Usuario)getIntent().getExtras().get("usuario");
         amostra = (AmostraDTO)getIntent().getExtras().get("amostra");
@@ -92,9 +89,7 @@ public class ItemDataActivity extends AppCompatActivity {
         tvUserLoggedItemData.setText("Logado como: "+usuario.getNome());
 
 
-        if (!amostra.getDataFim().equals("null")){
-            disableButton();
-        }
+
 
         //updateMetricsList();
     }
@@ -112,157 +107,4 @@ public class ItemDataActivity extends AppCompatActivity {
 //            metricsAdapter.add(ac.getTexto());
 //    }
 
-    public void destruir(View view) {
-        btnDestruirAmostra.setEnabled(false);
-        new AlertDialog.Builder(this)
-                .setTitle("Destruir Amostra")
-                .setMessage("Tem certeza que deseja destruir esta amostra?")
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        try {
-                            final Amostra a = new Amostra();
-                            a.setNome(amostra.getNome());
-                            a.setUsuario(amostra.getUsuario().getLogin());
-                            a.setIdEtapa(amostra.getEtapa().getIdEtapa());
-                            a.setDescricao(amostra.getDescricao());
-                            a.setDataCriacao(new SimpleDateFormat("yyyy-MM-dd").parse(amostra.getDataCriacao()));
-                            a.setDataFim(new Date());
-                            a.setIdAmostra(amostra.getIdAmostra());
-                            String url = getResources().getString(R.string.server_address) + "amostra";
-                            JsonObjectRequest destroySampleRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    btnDestruirAmostra.setEnabled(true);
-                                    if (response.equals(null)) return;
-                                    amostra = JsonParser.parseAmostra(response);
-                                    if (amostra != null) {
-                                        disableButton();
-                                    } else
-                                        finish();
-
-                                    try {
-                                        Thread.sleep(500);
-                                    } catch (Exception e) {
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    btnDestruirAmostra.setEnabled(true);
-                                }
-
-                            }) {
-
-                                @Override
-                                public String getBodyContentType() {
-                                    return "application/json; charset=utf-8";
-                                }
-
-                                @Override
-                                public byte[] getBody() {
-                                    return a.fillPayload().getBytes();
-                                }
-                            };
-
-                            rq.add(destroySampleRequest);
-                        } catch (Exception e) { Log.e("error",e.getMessage());
-                        }
-
-
-                    }
-                })
-
-                // A null listener allows the button to dismiss the dialog and take no further action.
-                .setNegativeButton("Não", null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-        btnDestruirAmostra.setEnabled(true);
-
-    }
-
-    public void tirarFoto(View view) {
-        showFileChooser();
-    }
-
-
-    private void disableButton() {
-        btnDestruirAmostra.setText("Destruida em "+amostra.getDataFim());
-        btnDestruirAmostra.setEnabled(false);
-        btnTirarFoto.setEnabled(false);
-        btnTirarFoto.setBackgroundColor(Color.parseColor("#C35F5050"));
-        btnDestruirAmostra.setTextSize(20);
-        btnDestruirAmostra.setBackgroundColor(Color.parseColor("#C35F5050"));
-    }
-
-    private void showFileChooser() {
-        Intent pickImageIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickImageIntent.setType("image/*");
-        pickImageIntent.putExtra("aspectX", 1);
-        pickImageIntent.putExtra("aspectY", 1);
-        pickImageIntent.putExtra("scale", true);
-        pickImageIntent.putExtra("outputFormat",
-                Bitmap.CompressFormat.JPEG.toString());
-        startActivityForResult(pickImageIntent, PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri filePath = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                Bitmap lastBitmap = null;
-                lastBitmap = bitmap;
-                //encoding image to string
-                final String image = getStringImage(lastBitmap);
-                Log.d("test",image);
-                //passing the image to volley
-                String url = getResources().getString(R.string.server_address) + "amostra/picture/"+amostra.getIdAmostra();
-                StringRequest uploadImageRequest = new StringRequest(Request.Method.POST, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Log.d("teste", response);
-                            }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(ItemDataActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
-                        Log.e("teste",error.getMessage());
-
-                    }
-                }) {
-                    @Override
-                    public String getBodyContentType() {
-                        return "application/json; charset=utf-8";
-                    }
-
-                    @Override
-                    public byte[] getBody() {
-                        String body = "{ \"imagem\": \""+image+"\", \"id\": "+amostra.getIdAmostra()+" }";
-                        return body.getBytes();
-                    }
-                };
-                rq.add(uploadImageRequest);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private String getStringImage(Bitmap bmp) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
-
-    }
 }

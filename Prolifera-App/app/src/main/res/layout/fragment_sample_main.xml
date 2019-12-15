@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:nestedScrollingEnabled="true"
     tools:context="com.prolifera.app.Fragments.SampleMainFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -126,7 +127,7 @@
             app:layout_constraintTop_toBottomOf="@id/imgSampleItemData" />
 
         <Button
-            android:id="@+id/btnTakePhoto"
+            android:id="@+id/btnSampleCamera"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginTop="16dp"

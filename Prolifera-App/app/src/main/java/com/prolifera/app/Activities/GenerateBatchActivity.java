@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -144,8 +145,11 @@ public class GenerateBatchActivity extends AppCompatActivity {
                                 etapasAdapter.add(edto.getCodigo()+" - "+edto.getNome());
                             } catch (Exception e) { e.printStackTrace(); }
                         }
-                        if (etapas.size() == 0)
+                        if (etapas.size() == 0) {
                             etapasAdapter.add("Não há etapas em andamento!");
+
+                            btnGenerateBatch.setBackgroundColor(Color.parseColor("#C35F5050"));
+                        }
                         else
                             btnGenerateBatch.setEnabled(true);
 
