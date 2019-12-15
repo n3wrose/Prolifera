@@ -10,52 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btnVerHistorico"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/colorPrimary"
-            android:text="Ver Histórico"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnTirarFoto" />
-
-        <Button
-            android:id="@+id/btnDestruirAmostra"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@android:color/holo_red_dark"
-            android:onClick="destruir"
-            android:text="Destruir Amostra"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvParentsInfoItemData" />
-
-        <Button
-            android:id="@+id/btnScanParentItemData"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:includeFontPadding="false"
-            android:text="Scan"
-            android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@id/tvScanParentsItemData"
-            app:layout_constraintTop_toTopOf="@+id/tvScanParentsItemData" />
-
         <ImageView
             android:id="@+id/imgLogoItemData"
             android:layout_width="80dp"
@@ -89,145 +43,53 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imgLogoItemData" />
 
-        <Button
-            android:id="@+id/btnAdicionarQuantificador"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/colorPrimary"
-            android:text="Adicionar Medição"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvEtapaItemData" />
-
-        <Button
-            android:id="@+id/btnTirarFoto"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/colorPrimary"
-            android:text="Tirar Foto"
-            android:textColor="@android:color/white"
-            android:onClick="tirarFoto"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnAdicionarQuantificador" />
-
         <TextView
             android:id="@+id/tvEtapaItemData"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="etapa"
             android:textSize="25sp"
-            app:layout_constraintStart_toEndOf="@+id/tvItemNameItemData"
-            app:layout_constraintStart_toStartOf="@+id/tvItemNameItemData"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvGenItemData"
             app:layout_constraintTop_toBottomOf="@+id/tvItemNameItemData" />
 
         <TextView
-            android:id="@+id/tvParentsAndRecentMeasurements"
+            android:id="@+id/tvGenItemData"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Pais e medidas recentes:"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnVerHistorico" />
-
-        <TextView
-            android:id="@+id/tvScanParentsItemData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Adicionar pai"
-            android:textSize="25sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tvAddedParentsItemData"
-            app:layout_constraintStart_toEndOf="@+id/tvAddedParentsItemData" />
-
-        <TextView
-            android:id="@+id/tvAddedParentsItemData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:text="Pai(s):"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMeasurementsInfoItemData" />
-
-        <ListView
-            android:id="@+id/lstParentItemData"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:isScrollContainer="true"
-            android:nestedScrollingEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvScanParentsItemData" />
-
-        <ListView
-            android:id="@+id/lstMeasurement"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:isScrollContainer="true"
-            android:nestedScrollingEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="gen -"
+            android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRecentMeasurements" />
+            app:layout_constraintTop_toBottomOf="@+id/tvItemNameItemData" />
 
-        <TextView
-            android:id="@+id/tvRecentMeasurements"
-            android:layout_width="wrap_content"
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabItemData"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Últimas medições cadastradas:"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvParentsAndRecentMeasurements" />
-
-        <TextView
-            android:id="@+id/tvParentsInfoItemData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/roundedbutton"
-            android:backgroundTint="@android:color/holo_red_dark"
-            android:padding="3dp"
-            android:text="Sem medidas cadastradas!"
-            android:textColor="@android:color/white"
-            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lstParentItemData" />
+            app:layout_constraintTop_toBottomOf="@+id/tvGenItemData"
+            app:tabBackground="@color/colorPrimary"
+            app:tabTextColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/tvMeasurementsInfoItemData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/roundedbutton"
-            android:backgroundTint="@android:color/holo_red_dark"
-            android:padding="3dp"
-            android:text="Sem medições!"
-            android:textColor="@android:color/white"
-            android:visibility="invisible"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vpItemData"
+            android:layout_width="match_parent"
+            android:layout_height="380dp"
+            android:layout_marginBottom="8dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lstMeasurement" />
+            app:layout_constraintTop_toBottomOf="@+id/tabItemData">
+
+        </androidx.viewpager.widget.ViewPager>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

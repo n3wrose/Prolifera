@@ -1,6 +1,7 @@
 package com.prolifera.app.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -26,6 +27,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.prolifera.R;
+import com.google.android.material.tabs.TabLayout;
+import com.prolifera.app.Fragments.AddClassificationFragment;
+import com.prolifera.app.Fragments.AddMeasureFragment;
+import com.prolifera.app.Fragments.SampleHistoryFragment;
+import com.prolifera.app.Fragments.SampleMainFragment;
 import com.prolifera.app.JsonParser;
 import com.prolifera.app.Model.DB.Amostra;
 import com.prolifera.app.Model.DB.Usuario;
@@ -33,6 +39,7 @@ import com.prolifera.app.Model.DTO.AmostraQualificadorDTO;
 import com.prolifera.app.Model.DTO.AmostraDTO;
 import com.prolifera.app.Model.DTO.AmostraQuantificadorDTO;
 import com.prolifera.app.RequestQueueSingleton;
+import com.prolifera.app.TabAdapter;
 
 import org.json.JSONObject;
 
@@ -47,6 +54,8 @@ public class ItemDataActivity extends AppCompatActivity {
     private Button btnDestruirAmostra, btnTirarFoto;
     private TextView tvItemNameItemData, tvEtapaItemData, tvUserLoggedItemData;
     private ListView lstMeasurement, lstParentItemData;
+    private ViewPager vpItemData;
+    private TabLayout tabItemData;
     private AmostraDTO amostra;
     private Usuario usuario;
     @Override
@@ -57,13 +66,23 @@ public class ItemDataActivity extends AppCompatActivity {
         tvItemNameItemData = findViewById(R.id.tvItemNameItemData);
         tvEtapaItemData = findViewById(R.id.tvEtapaItemData);
         tvUserLoggedItemData = findViewById(R.id.tvUserLoggedItemData);
-        lstMeasurement = findViewById(R.id.lstMeasurement);
         lstParentItemData = findViewById(R.id.lstParentItemData);
         btnDestruirAmostra = findViewById(R.id.btnDestruirAmostra);
-        btnTirarFoto = findViewById(R.id.btnTirarFoto);
 
         usuario = (Usuario)getIntent().getExtras().get("usuario");
         amostra = (AmostraDTO)getIntent().getExtras().get("amostra");
+
+        TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager());
+        tabAdapter.add(new SampleMainFragment(), "Dados");
+        tabAdapter.add(new AddMeasureFragment(), "Medir");
+        tabAdapter.add(new AddClassificationFragment(), "Classificar");
+        tabAdapter.add(new SampleHistoryFragment(), "Histórico");
+
+        vpItemData = findViewById(R.id.vpItemData);
+        vpItemData.setAdapter(tabAdapter);
+
+        tabItemData = findViewById(R.id.tabItemData);
+        tabItemData.setupWithViewPager(vpItemData);
 
         //RequestQueue instatiation
         rq = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
@@ -77,21 +96,21 @@ public class ItemDataActivity extends AppCompatActivity {
             disableButton();
         }
 
-        updateMetricsList();
+        //updateMetricsList();
     }
 
     private void updateParentList() {
 
     }
 
-    private void updateMetricsList() {
-        final ArrayAdapter<String> metricsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        lstMeasurement.setAdapter(metricsAdapter);
-        for (AmostraQuantificadorDTO am : amostra.getMedidas())
-            metricsAdapter.add(am.getTexto());
-        for (AmostraQualificadorDTO ac : amostra.getClassificacoes())
-            metricsAdapter.add(ac.getTexto());
-    }
+//    private void updateMetricsList() {
+//        final ArrayAdapter<String> metricsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+//        lstMeasurement.setAdapter(metricsAdapter);
+//        for (AmostraQuantificadorDTO am : amostra.getMedidas())
+//            metricsAdapter.add(am.getTexto());
+//        for (AmostraQualificadorDTO ac : amostra.getClassificacoes())
+//            metricsAdapter.add(ac.getTexto());
+//    }
 
     public void destruir(View view) {
         btnDestruirAmostra.setEnabled(false);

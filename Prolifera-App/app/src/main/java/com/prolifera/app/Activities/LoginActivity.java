@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         try {
             Thread.sleep(500);
         } catch (Exception e) { }*/
+
         Intent intent = new Intent(LoginActivity.this, GenSelectionActivity.class);
         intent.putExtra("usuario",usuario);
         startActivity(intent);
