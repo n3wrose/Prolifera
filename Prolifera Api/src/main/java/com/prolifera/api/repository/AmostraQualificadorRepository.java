@@ -2,10 +2,14 @@ package com.prolifera.api.repository;
 
 import com.prolifera.api.model.DB.AmostraQualificador;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface AmostraQualificadorRepository extends JpaRepository<AmostraQualificador, Long> {
 
-    List<AmostraQualificador> findByIdAmostra(long idAmostra);
+    @Query(value = "select * from amostra_qualificador where id_amostra = :idamostra order by timestamp desc", nativeQuery = true)
+    List<AmostraQualificador> findByIdAmostra(@Param("idamostra") long idAmostra);
+
 }

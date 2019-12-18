@@ -6,8 +6,6 @@ import java.util.Date;
 
 public class Amostra {
     private String nome;
-    
-    
     private long idAmostra;
     private long idEtapa;
     private String descricao;

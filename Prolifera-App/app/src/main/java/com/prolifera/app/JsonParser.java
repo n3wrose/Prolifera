@@ -1,5 +1,7 @@
 package com.prolifera.app;
 
+
+import com.prolifera.app.Model.DB.AmostraPai;
 import com.prolifera.app.Model.DB.Quantificador;
 import com.prolifera.app.Model.DB.Opcao;
 import com.prolifera.app.Model.DB.Usuario;
@@ -74,7 +76,8 @@ public class JsonParser {
             adto.setDescricao(amostraObj.getString("descricao"));
             adto.setUsuario(parseUser(amostraObj.getJSONObject("usuario")));
             JSONArray medidasArray = amostraObj.getJSONArray("medidas"),
-                    classificacoesArray = amostraObj.getJSONArray("classificacoes");
+                    classificacoesArray = amostraObj.getJSONArray("classificacoes"),
+                    paisArray = amostraObj.getJSONArray("idPais");
             List<AmostraQuantificadorDTO> medidas = new ArrayList<>();
             for (int i = 0; i<medidasArray.length(); i++)
                 medidas.add(parseAmostraQuantificador(medidasArray.getJSONObject(i)));
@@ -83,6 +86,10 @@ public class JsonParser {
             for (int i=0; i< classificacoesArray.length(); i++)
                 classificacoes.add(parseAmostraQualificador(classificacoesArray.getJSONObject(i)));
             adto.setClassificacoes(classificacoes);
+            List<Long> pais = new ArrayList<>();
+            for (int i=0; i<paisArray.length(); i++)
+                pais.add(paisArray.getLong(i));
+            adto.setIdPais(pais);
 
         } catch (Exception e) { return null; }
         return adto;
@@ -93,9 +100,9 @@ public class JsonParser {
         try {
             amdto.setValor(obj.getDouble("valor"));
             amdto.setTimestamp(obj.getString("timestamp"));
-            amdto.setQuantificador(parseQuantificador(obj.getJSONObject("Quantificador")));
+            amdto.setQuantificador(parseQuantificador(obj.getJSONObject("quantificador")));
 
-        } catch (Exception e) { }
+        } catch (Exception e) { e.printStackTrace(); return null; }
         return amdto;
     }
 
@@ -115,7 +122,7 @@ public class JsonParser {
         try {
             acdto.setTimestamp(obj.getString("timestamp"));
             acdto.setValor(obj.getString("valor"));
-            acdto.setQualificadorDTO(parseQualificador(obj.getJSONObject("QualificadorDTO")));
+            acdto.setQualificadorDTO(parseQualificador(obj.getJSONObject("qualificadorDTO")));
         }catch (Exception e) { return null; }
         return acdto;
     }
@@ -143,5 +150,14 @@ public class JsonParser {
             op.setValor(obj.getString("valor"));
         }catch (Exception e) { return null; }
         return op;
+    }
+
+    public static AmostraPai parseAP(JSONObject obj) {
+        AmostraPai ap = new AmostraPai();
+        try {
+            ap.setIdPai(obj.getLong("idPai"));
+            ap.setIdFilho(obj.getLong("idFilho"));
+        } catch (Exception e) { return null; }
+        return ap;
     }
 }

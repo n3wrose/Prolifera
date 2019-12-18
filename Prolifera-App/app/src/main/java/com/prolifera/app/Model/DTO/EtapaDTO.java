@@ -2,6 +2,7 @@ package com.prolifera.app.Model.DTO;
 
 import com.prolifera.app.Model.DB.Etapa;
 import com.prolifera.app.Model.DB.Usuario;
+import com.prolifera.app.Utils;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -116,7 +117,7 @@ public class EtapaDTO implements Serializable {
     }
 
     public String getDataFim() {
-        return dataFim;
+        return Utils.toUserDate(dataFim);
     }
 
     public void setDataFim(String dataFim) {
@@ -125,7 +126,7 @@ public class EtapaDTO implements Serializable {
 
     public String getDataInicio()
     {
-        return dataInicio;
+        return Utils.toUserDate(dataInicio);
     }
 
     public void setDataInicio(String dataInicio) {
@@ -133,7 +134,7 @@ public class EtapaDTO implements Serializable {
     }
 
     public String getDataPrevista() {
-        return dataPrevista;
+        return Utils.toUserDate(dataPrevista);
     }
 
     public void setDataPrevista(String dataPrevista) {

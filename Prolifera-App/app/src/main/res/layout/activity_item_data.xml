@@ -10,16 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imgLogoItemData"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo_noname" />
-
         <TextView
             android:id="@+id/tvUserLoggedItemData"
             android:layout_width="wrap_content"
@@ -40,7 +30,7 @@
             android:textSize="40sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgLogoItemData" />
+            app:layout_constraintTop_toBottomOf="@+id/tvUserLoggedItemData" />
 
         <TextView
             android:id="@+id/tvEtapaItemData"

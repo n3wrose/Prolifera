@@ -10,7 +10,7 @@ public class Quantificador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idQuantificador;
-    private long idEtapa;
+    private Long idEtapa;
     private String nome;
     private String unidade;
 
@@ -31,11 +31,11 @@ public class Quantificador {
         this.nome = nome;
     }
 
-    public long getIdEtapa() {
+    public Long getIdEtapa() {
         return idEtapa;
     }
 
-    public void setIdEtapa(long idEtapa) {
+    public void setIdEtapa(Long idEtapa) {
         this.idEtapa = idEtapa;
     }
 

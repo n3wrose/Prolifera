@@ -1,5 +1,6 @@
 package com.prolifera.api.controllers;
 
+import com.prolifera.api.ExportXlsFile;
 import com.prolifera.api.model.DB.*;
 import com.prolifera.api.model.DTO.*;
 import com.prolifera.api.model.DTO.EtapaDTO;
@@ -8,13 +9,16 @@ import com.prolifera.api.model.ImagePayload;
 import com.prolifera.api.model.SampleBatch;
 import com.prolifera.api.repository.*;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.BeanUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 @RestController
@@ -46,13 +50,8 @@ public class ProliferaController {
     @PostMapping("/processo")
     @ResponseStatus(HttpStatus.OK)
     public ProcessoDTO saveProcess(@RequestBody Processo p) {
-        Optional<Processo> op = processRepository.findById(p.getIdProcesso());
-        if (op.isPresent()) {
-            Processo old = op.get();
-            BeanUtils.copyProperties(p, old);
-            p = old;
-        }
-        p.setTimestamp(new Date());
+        if (p.getIdProcesso() == 0)
+            p.setTimestamp(new Date());
         ProcessoDTO pdto = new ProcessoDTO(processRepository.saveAndFlush(p));
         pdto.setUsuario(userRepository.findById(p.getUsuario()).get());
         return pdto;
@@ -75,14 +74,29 @@ public class ProliferaController {
         return fillProcesso((Processo)o.get());
     }
 
+    @GetMapping("teste")
+    public String teste() {
+        return getClass().toString();
+    }
+
+    @GetMapping(
+            value = "/picture/{id}",
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public @ResponseBody byte[] getImageWithMediaType(@PathVariable("id") long id) throws IOException {
+        InputStream in = getClass()
+                .getResourceAsStream("/images/"+id+".jpg");
+        return IOUtils.toByteArray(in);
+    }
+
     @Autowired
     EtapaRepository etapaRepository;
     @PostMapping("/etapa")
     @ResponseStatus(HttpStatus.OK)
     public EtapaDTO saveEtapa(@RequestBody Etapa e) {
-        e.setTimestamp(new Date());
+        System.out.println("teste");
+            e.setTimestamp(new Date());
         EtapaDTO edto = fillEtapa(etapaRepository.saveAndFlush(e));
-        System.out.println(e.fillPayload());
         return edto;
     }
 
@@ -97,6 +111,36 @@ public class ProliferaController {
     @Autowired
     AmostraRepository amostraRepository;
 
+    @GetMapping("/report/{id}")
+    public String makeReport(@PathVariable("id") long idEtapa) throws IOException {
+        if (!etapaRepository.findById(idEtapa).isPresent())
+            return "Etapa não encontrada!";
+        List<AmostraDTO> amostras = new ArrayList<>();
+        for (Amostra a : amostraRepository.findAllByIdEtapa(idEtapa))
+            amostras.add(fillAmostra(a));
+        ExportXlsFile.exportEtapaData(amostras);
+        return "Relatório emitido com sucesso.";
+    }
+
+    @GetMapping("/report_full/{id}")
+    public String makeFullReport(@PathVariable("id") long idProcesso) throws IOException {
+
+        Optional o = processRepository.findById(idProcesso);
+        if (!o.isPresent())
+            return "Processo não encontrado!";
+        Workbook wb = new XSSFWorkbook();
+        for (Etapa e : etapaRepository.findByIdProcesso(idProcesso)) {
+            List<AmostraDTO> amostras = new ArrayList<>();
+            for (Amostra a : amostraRepository.findAllByIdEtapa(e.getIdEtapa()))
+                amostras.add(fillAmostra(a));
+            ExportXlsFile.exportEtapaData(amostras, wb);
+        }
+        Processo p = (Processo)o.get();
+        ExportXlsFile.saveAndClose(wb,p.getLote()+"_full.xlsx");
+        return "Relatório emitido com sucesso!";
+
+    }
+
     @GetMapping("/amostra")
     public List<AmostraDTO> listAmostras(){
         List<AmostraDTO> amostras = new ArrayList<AmostraDTO>();
@@ -104,12 +148,26 @@ public class ProliferaController {
             amostras.add(fillAmostra(a));
         return amostras;
     }
+    @PostMapping("/amostra")
+    @ResponseStatus(HttpStatus.OK)
+    public AmostraDTO saveAmostra(@RequestBody Amostra a) {
+        AmostraDTO adto = fillAmostra(amostraRepository.saveAndFlush(a));
+        return adto;
+    }
+
+    @GetMapping("/amostra/etapa/{id}")
+    public List<AmostraDTO> listAmostraByEtapaId(@PathVariable("id") long idEtapa){
+        List<AmostraDTO> amostras = new ArrayList<>();
+        for (Amostra a : amostraRepository.findAllByIdEtapa(idEtapa))
+            amostras.add(fillAmostra(a));
+        return amostras;
+    }
 
     @GetMapping("/amostra/{id}")
-    public AmostraDTO getAmostra(@PathVariable("id") long id){
+    public AmostraDTO getAmostraById(@PathVariable("id") long id){
         AmostraDTO adto = null;
-        Optional<Amostra> o = amostraRepository.findById(id);
-        if (o.isPresent())
+        Optional o = amostraRepository.findById(id);
+         if (o.isPresent())
             adto = fillAmostra((Amostra)o.get());
         return adto;
     }
@@ -144,6 +202,9 @@ public class ProliferaController {
     @PostMapping("/amostra/picture/{id}")
     public void savePicture(@RequestBody ImagePayload image) throws IOException {
 
+        System.out.println("imagem: "+image.getImagem());
+        System.out.println("id amostra: "+image.getId());
+
         AmostraDTO adto = fillAmostra(amostraRepository.findById(image.getId()).get());
         String path = "p"+ adto.getEtapa().getProcesso().getIdProcesso()+"\\e"+adto.getEtapa().getIdEtapa()+
                 "\\a"+adto.getIdAmostra() ;
@@ -153,28 +214,41 @@ public class ProliferaController {
         byte[] decodedBytes = Base64.getDecoder().decode(image.getImagem());
         FileUtils.writeByteArrayToFile(new File(path+"\\"+new Date()+".jpg"), decodedBytes);
 
-        System.out.println("imagem: "+image.getImagem());
-        System.out.println("id amostra: "+image.getId());
+
     }
 
     @PostMapping("/batch_amostra")
     public List<String> saveAmostra(@RequestBody SampleBatch sb) {
         Amostra a = sb.getAmostra();
-        int numero = amostraRepository.findLastSampleNumber(a.getIdEtapa());
+        Integer numero = amostraRepository.findLastSampleNumber(a.getIdEtapa());
+        if (numero == null)
+            numero = 0;
         List<String> lista = new ArrayList<>();
         for (int i = 0; i < sb.getSample(); i++) {
             numero ++;
             for (int j = 0; j < sb.getSubsample() ; j++) {
                 Amostra amostra = new Amostra();
                 amostra.setNumero(numero);
-                amostra.setNome(numero +"."+ Character.toString((char)(j+65)));
+                StringBuilder nome = new StringBuilder();
+                nome.append(numero +".");
+                if (j>25)
+                    nome.append(Character.toString((char)((j / 26)+64)));
+                nome.append(Character.toString((char)((j % 26)+65)));
+                amostra.setNome(nome.toString());
                 amostra.setDataCriacao(new Date());
                 amostra.setDescricao(a.getDescricao());
                 amostra.setIdEtapa(a.getIdEtapa());
                 amostra.setUsuario(a.getUsuario());
                 amostra.setDataFim(null);
                 amostraRepository.saveAndFlush(amostra);
-                lista.add("id: " + amostra.getIdAmostra() + " - " + amostra.getNome());
+                if (sb.getIdPais() != null)
+                    for (Long idPai : sb.getIdPais()) {
+                        AmostraPai ap = new AmostraPai();
+                        ap.setIdFilho(amostra.getIdAmostra());
+                        ap.setIdPai(idPai);
+                        amostraPaiRepository.saveAndFlush(ap);
+                }
+                lista.add(amostra.getIdAmostra()+"");
             }
         }
         return lista;
@@ -187,19 +261,25 @@ public class ProliferaController {
     public Quantificador saveQuantificador(@RequestBody Quantificador quantificador) {
         return quantificadorRepository.saveAndFlush(quantificador);
     }
-    @GetMapping("/quantificador")
-    public List<Quantificador> listQuantificador(){
-        return quantificadorRepository.findAll();
+    @GetMapping("/quantificador/{id}")
+    public List<Quantificador> listQuantificadorByEtapaId(@PathVariable("id") long id){
+        return quantificadorRepository.findByIdEtapa(id);
+    }
+
+    @GetMapping("/processo/count_samples/{id}")
+    public Integer countSamples(@PathVariable("id") long idProcesso) {
+        return amostraRepository.countSamplesByIdProcesso(idProcesso);
     }
 
     @Autowired
     AmostraQuantificadorRepository amRepository;
 
     @PostMapping("/amostra_quantificador")
-    public AmostraQuantificador saveAmostraQuantificador(@RequestBody AmostraQuantificador am) {
+    public AmostraQuantificadorDTO saveAmostraQuantificador(@RequestBody AmostraQuantificador am) {
         am.setTimestamp(new Date());
-        System.out.println(am.fillPayload());
-        return amRepository.saveAndFlush(am);
+        AmostraQuantificadorDTO aqdto = new AmostraQuantificadorDTO(amRepository.saveAndFlush(am));
+        aqdto.setQuantificador(quantificadorRepository.findById(am.getIdQuantificador()).get());
+        return aqdto;
     }
 
     @Autowired
@@ -221,11 +301,12 @@ public class ProliferaController {
         Qdto.setOpcoes(opcoes);
         return Qdto;
     }
-    @GetMapping("/qualificador")
-    public List<QualificadorDTO> listQualificador() {
+    @GetMapping("/qualificador/{id}")
+    public List<QualificadorDTO> listQualificador(@PathVariable("id") long idEtapa) {
         List<QualificadorDTO> cdtoList = new ArrayList<QualificadorDTO>();
-        for (Qualificador c : qualificadorRepository.findAll())
+        for (Qualificador c : qualificadorRepository.findByIdEtapa(idEtapa)) {
             cdtoList.add(fillQualificador(c));
+        }
         return cdtoList;
     }
 
@@ -245,10 +326,11 @@ public class ProliferaController {
     AmostraQualificadorRepository acRepository;
 
     @PostMapping("/amostra_qualificador")
-    public AmostraQualificador saveAc(@RequestBody AmostraQualificador ac) {
+    public AmostraQualificadorDTO saveAc(@RequestBody AmostraQualificador ac) {
         ac.setTimestamp(new Date());
-        System.out.println(ac.fillPayload());
-        return acRepository.saveAndFlush(ac);
+        AmostraQualificadorDTO acdto = new AmostraQualificadorDTO(acRepository.saveAndFlush(ac));
+        acdto.setQualificadorDTO(fillQualificador(qualificadorRepository.findById(ac.getIdQualificador()).get()));
+        return acdto;
     }
 
     @GetMapping("/amostra_qualificador")
@@ -274,10 +356,7 @@ public class ProliferaController {
 
     private QualificadorDTO fillQualificador(Qualificador c) {
         QualificadorDTO cdto = new QualificadorDTO(c);
-        List<Opcao> opcoes = new ArrayList<Opcao>();
-        for (Opcao op : opcaoRepository.findAll())
-            opcoes.add(op);
-        cdto.setOpcoes(opcoes);
+        cdto.setOpcoes(opcaoRepository.findByIdQualificador(c.getIdQualificador()));
         return cdto;
     }
 

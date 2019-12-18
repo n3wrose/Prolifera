@@ -5,8 +5,6 @@ import java.util.Date;
 
 public class AmostraQuantificador {
 
-    
-    
     private long idRegistro;
     private long idAmostra;
     private long idQuantificador;

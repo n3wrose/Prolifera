@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -54,22 +56,7 @@ public class GenSelectionActivity extends AppCompatActivity {
         usuario = (Usuario)getIntent().getSerializableExtra("usuario");
 
         tvUserLoggedGenSelection.setText("Bem vindo, "+usuario.getNome()+ " "+usuario.getSobrenome());
-        processos = new ArrayList<>();
 
-        //fill listView
-       updateProcesses();
-    }
-
-    public void novoGen(View view) {
-            Intent intent = new Intent(this, CreateGenActivity.class);
-            intent.putExtra("usuario",usuario);
-            startActivity(intent);
-            updateProcesses();
-    }
-
-    private void updateProcesses() {
-        final ArrayAdapter<String> processosAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        lstGen.setAdapter(processosAdapter);
         lstGen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -80,6 +67,21 @@ public class GenSelectionActivity extends AppCompatActivity {
                 updateProcesses();
             }
         });
+       //updateProcesses();
+    }
+
+    public void novoGen(View view) {
+            Intent intent = new Intent(this, CreateGenActivity.class);
+            intent.putExtra("usuario",usuario);
+            startActivity(intent);
+    }
+
+    private void updateProcesses() {
+        processos = new ArrayList<>();
+        Toast.makeText(getApplicationContext(),"Preenchendo lista de processos...",Toast.LENGTH_SHORT).show();
+        final ArrayAdapter<String> processosAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        lstGen.setAdapter(processosAdapter);
+
         //setting up ArrayRequest
         String url = getResources().getString(R.string.server_address) + "processo";
         JsonArrayRequest processosRequest = new JsonArrayRequest
@@ -93,7 +95,10 @@ public class GenSelectionActivity extends AppCompatActivity {
                             try {
                                 ProcessoDTO pdto = JsonParser.parseProcesso(response.getJSONObject(i));
                                 processos.add(pdto);
-                                processosAdapter.add(pdto.getLote()+ " iniciado em "+ Utils.toUserDate(pdto.getTimestamp()));
+                                if (pdto.getTimestamp().equals("null"))
+                                    processosAdapter.add(pdto.getLote()+ ", de data desconhecida");
+                                else
+                                    processosAdapter.add(pdto.getLote()+ " iniciado em "+ Utils.toUserDate(pdto.getTimestamp()));
                             } catch (Exception e) { e.printStackTrace(); }
                         }
                     }
@@ -103,5 +108,11 @@ public class GenSelectionActivity extends AppCompatActivity {
                     }
                 });
         rq.add(processosRequest);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateProcesses();
     }
 }

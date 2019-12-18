@@ -28,12 +28,18 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.prolifera.R;
 import com.google.android.material.tabs.TabLayout;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.prolifera.app.Fragments.AddClassificationFragment;
 import com.prolifera.app.Fragments.AddMeasureFragment;
+import com.prolifera.app.Fragments.EtapaAmostraFragment;
+import com.prolifera.app.Fragments.EtapaMainFragment;
+import com.prolifera.app.Fragments.EtapaMetricsFragment;
 import com.prolifera.app.Fragments.SampleHistoryFragment;
 import com.prolifera.app.Fragments.SampleMainFragment;
 import com.prolifera.app.JsonParser;
 import com.prolifera.app.Model.DB.Amostra;
+import com.prolifera.app.Model.DB.AmostraPai;
 import com.prolifera.app.Model.DB.Usuario;
 import com.prolifera.app.Model.DTO.AmostraQualificadorDTO;
 import com.prolifera.app.Model.DTO.AmostraDTO;
@@ -46,6 +52,9 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import static com.prolifera.app.Activities.GenMainActivity.READ_CODE_REQUEST;
 
 public class ItemDataActivity extends AppCompatActivity {
 
@@ -55,7 +64,7 @@ public class ItemDataActivity extends AppCompatActivity {
     private ViewPager vpItemData;
     private TabLayout tabItemData;
     public AmostraDTO amostra;
-    private Usuario usuario;
+    public Usuario usuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +81,7 @@ public class ItemDataActivity extends AppCompatActivity {
         TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager());
         tabAdapter.add(new SampleMainFragment(), "Dados");
         tabAdapter.add(new AddMeasureFragment(), "Medir");
-        tabAdapter.add(new AddClassificationFragment(), "Classificar");
+        //tabAdapter.add(new AddClassificationFragment(), "Classificar");
         tabAdapter.add(new SampleHistoryFragment(), "Histórico");
 
         vpItemData = findViewById(R.id.vpItemData);
@@ -94,8 +103,84 @@ public class ItemDataActivity extends AppCompatActivity {
         //updateMetricsList();
     }
 
-    private void updateParentList() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode, data);
+        if (requestCode == READ_CODE_REQUEST && resultCode == RESULT_OK){
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            if (result != null ) {
+                final String id = result.getContents();
+                new AlertDialog.Builder(getApplicationContext())
+                        .setTitle("Adicionar Parentesco")
+                        .setMessage("Deseja adicionar a amostrade id"+id+" como pai da amostra atual?")
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                final AmostraPai ap = new AmostraPai();
+                                try {
+                                    ap.setIdFilho(amostra.getIdAmostra());
+                                    ap.setIdPai(Long.parseLong(id));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(getApplicationContext(), "Problema na leitura de QR Code", Toast.LENGTH_SHORT);
+                                }
+                                String url = getResources().getString(R.string.server_address) + "amostra_pai";
+                                JsonObjectRequest newParentRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        AmostraPai amostraPai = new AmostraPai();
+                                        if (response != null) {
+                                            amostraPai = JsonParser.parseAP(response);
+                                            if (amostraPai != null) {
+                                                Toast.makeText(getApplicationContext(), "Pai adicionado!", Toast.LENGTH_SHORT);
+                                                List<Long> pais = amostra.getIdPais();
+                                                pais.add(amostraPai.getIdPai());
+                                                amostra.setIdPais(pais);
+                                            }
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "Não foi possível enviar dados!",Toast.LENGTH_SHORT).show();
+                                        }
 
+                                    }
+                                }, new Response.ErrorListener() {
+
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Toast.makeText(getApplicationContext(), "Erro ao enviar dados: "+ error.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }){
+                                    @Override
+                                    public String getBodyContentType() {
+                                        return "application/json; charset=utf-8";
+                                    }
+
+                                    @Override
+                                    public byte[] getBody()  {
+                                        return ap.fillPayload().getBytes();
+                                    }
+                                };
+                                rq.add(newParentRequest);
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton("Não", null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        }
+    }
+
+
+    public void attachFragments() {
+        TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager());
+        tabAdapter.add(new SampleMainFragment(), "Dados");
+        tabAdapter.add(new AddMeasureFragment(), "Medir");
+        //tabAdapter.add(new AddClassificationFragment(), "Classificar");
+        tabAdapter.add(new SampleHistoryFragment(), "Histórico");
+
+        vpItemData.setAdapter(tabAdapter);
+        tabItemData.setupWithViewPager(vpItemData);
     }
 
 //    private void updateMetricsList() {

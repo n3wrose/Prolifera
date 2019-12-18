@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:text="Métrica:"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,12 +38,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="100dp"
             android:ems="10"
-            android:inputType="number"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tvQuantificatorValue"
+            android:inputType="numberDecimal"
+            android:digits="0123456789."
+            app:layout_constraintBottom_toBottomOf="@+id/tvQuantificatorValue"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tvQuantificatorValue" />
+            app:layout_constraintStart_toEndOf="@+id/tvQuantificatorValue"
+            app:layout_constraintTop_toTopOf="@+id/tvQuantificatorValue" />
 
         <TextView
             android:id="@+id/tvQuantificatorValue"
@@ -51,9 +53,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:text="Valor:"
+            android:text="Inserir Valor:"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMetricQuantificatorAddMeasure" />
+
+        <TextView
+            android:id="@+id/tvQuantificatorUnity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/etQuantificatorValue"
             app:layout_constraintTop_toBottomOf="@+id/tvMetricQuantificatorAddMeasure" />
 
         <TextView
@@ -68,16 +80,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvInfoAddQuantificator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etQuantificatorValue" />
-
         <Button
             android:id="@+id/btnAddQuantifier"
             android:layout_width="0dp"
@@ -86,12 +88,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@color/colorPrimary"
+            android:enabled="true"
             android:text="Adicionar Quantificador"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvInfoAddQuantificator" />
+            app:layout_constraintTop_toBottomOf="@+id/etQuantificatorValue" />
 
         <ImageView
             android:id="@+id/imgQuantificator"
@@ -102,6 +105,112 @@
             app:layout_constraintBottom_toBottomOf="@+id/tvQuantificatorAddMeasure"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvQuantificatorAddMeasure" />
+
+        <Spinner
+            android:id="@+id/spnQualificator"
+            android:layout_width="0dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvMetricQualificatorAddMeasure"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvMetricQualificatorAddMeasure"
+            app:layout_constraintTop_toTopOf="@+id/tvMetricQualificatorAddMeasure" />
+
+        <TextView
+            android:id="@+id/tvQualificatorOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Opções:"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMetricQualificatorAddMeasure" />
+
+        <TextView
+            android:id="@+id/tvMetricQualificatorAddMeasure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Métrica:"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvQualificatorAddMeasure" />
+
+        <EditText
+            android:id="@+id/etQualificatorOther"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/rgOpcao"
+            app:layout_constraintTop_toBottomOf="@+id/rgOpcao"
+            tools:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/tvQualificatorAddMeasure"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Qualificadores"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toStartOf="@+id/imgQualificator"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+        <ImageView
+            android:id="@+id/imgQualificator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:src="@drawable/qualificador"
+            app:layout_constraintBottom_toBottomOf="@+id/tvQualificatorAddMeasure"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvQualificatorAddMeasure" />
+
+        <Button
+            android:id="@+id/btnAddQualifier"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            android:background="@color/colorPrimary"
+            android:text="Adicionar Qualificador"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etQualificatorOther" />
+
+        <RadioGroup
+            android:id="@+id/rgOpcao"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvQualificatorOptions"
+            app:layout_constraintTop_toTopOf="@+id/tvQualificatorOptions" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnAddQuantifier" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -123,7 +123,7 @@ public class CreateEtapaActivity extends AppCompatActivity {
             etapa.setDataInicio(new SimpleDateFormat("dd/MM/yyyy").parse(etEtapaDate.getText().toString()));
         } else
             etapa.setStatus(Etapa.STATUS_EM_ESPERA);
-        etapa.setDataPrevista(new Date());
+        //etapa.setDataPrevista(new Date());
         String url = getResources().getString(R.string.server_address) + "etapa";
 
         JsonObjectRequest newEtapaRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {

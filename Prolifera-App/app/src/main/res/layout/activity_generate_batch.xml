@@ -23,6 +23,7 @@
             android:textAlignment="center"
             android:textColor="#646060"
             android:textSize="20sp"
+            android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@+id/etNumberSubGenerateBatch"
             app:layout_constraintTop_toTopOf="@+id/etNumberSubGenerateBatch" />
 
@@ -54,17 +55,17 @@
             android:layout_marginStart="16dp"
             android:text="Gerar pacote de amostras"
             android:textSize="40sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imgLogoGenerateBatch" />
 
         <ListView
             android:id="@+id/lstParentGenerateBatch"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:nestedScrollingEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAddedParentsGenerateBatch">
@@ -79,8 +80,10 @@
             android:layout_marginStart="8dp"
             android:ems="10"
             android:inputType="number"
+            android:nextFocusForward="@+id/spnEtapa"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvEnterNumberGenerateBatch"
-            app:layout_constraintStart_toEndOf="@+id/tvXGenerateBatch" />
+            app:layout_constraintStart_toEndOf="@+id/tvXGenerateBatch"
+            tools:text="1" />
 
         <EditText
             android:id="@+id/etNumberGenerateBatch"
@@ -89,6 +92,7 @@
             android:layout_marginStart="16dp"
             android:ems="10"
             android:inputType="number"
+            android:nextFocusForward="@+id/etNumberSubGenerateBatch"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvEnterNumberGenerateBatch"
             app:layout_constraintStart_toEndOf="@+id/tvEnterNumberGenerateBatch" />
 
@@ -97,29 +101,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
             android:text="Quantidade:"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvGenerateBatchTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvGenerateBatchHint2" />
 
         <TextView
             android:id="@+id/tvXGenerateBatch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
             android:text="x"
             android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="@+id/etNumberGenerateBatch"
             app:layout_constraintStart_toEndOf="@+id/etNumberGenerateBatch"
-            app:layout_constraintTop_toBottomOf="@+id/tvGenerateBatchTitle" />
+            app:layout_constraintTop_toTopOf="@+id/etNumberGenerateBatch" />
 
         <TextView
             android:id="@+id/tvEnterDescriptionGenerateBatch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:text="Descrição:"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="32dp"
             android:text="Etapa:"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +152,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:text="Pais (opcional):"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -159,10 +162,10 @@
             android:id="@+id/tvAddedParentsGenerateBatch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:text="Pais adicionados (clique para remover):"
-            android:textSize="25sp"
+            android:layout_marginTop="16dp"
+            android:text="Pais adicionados (clique longo para remover):"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvScanParentsGenerateBatch" />
 
@@ -171,6 +174,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
+            android:onClick="buscarAmostra"
             android:text="Scan"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvScanParentsGenerateBatch"
             app:layout_constraintStart_toEndOf="@+id/tvScanParentsGenerateBatch" />
@@ -180,7 +184,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:background="@color/colorPrimary"
@@ -191,7 +195,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvParentsInfoGenerateBatch" />
+            app:layout_constraintTop_toBottomOf="@+id/lstParentGenerateBatch" />
 
         <EditText
             android:id="@+id/etDescriptionGenerateBatch"
@@ -207,21 +211,6 @@
             app:layout_constraintStart_toEndOf="@+id/tvEnterDescriptionGenerateBatch" />
 
         <TextView
-            android:id="@+id/tvParentsInfoGenerateBatch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/roundedbutton"
-            android:backgroundTint="@android:color/holo_red_dark"
-            android:padding="3dp"
-            android:text="Nenhum pai cadastrado!"
-            android:textColor="@android:color/white"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvAddedParentsGenerateBatch" />
-
-        <TextView
             android:id="@+id/tvGenerateBatchHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -232,6 +221,19 @@
             app:layout_constraintBottom_toTopOf="@+id/btnGenerateBatch"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvGenerateBatchHint2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="3dp"
+            android:text="Serão geradas amostras X subamostras ao todo."
+            android:textColor="@android:color/darker_gray"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvGenerateBatchTitle" />
 
         <TextView
             android:id="@+id/tvAmostraGenerateBatch"
@@ -252,22 +254,8 @@
             android:text="subamostras"
             android:textColor="@android:color/darker_gray"
             android:visibility="visible"
-            app:layout_constraintStart_toEndOf="@+id/tvXGenerateBatch"
+            app:layout_constraintStart_toStartOf="@+id/etNumberSubGenerateBatch"
             app:layout_constraintTop_toBottomOf="@+id/etNumberSubGenerateBatch" />
-
-        <ListView
-            android:id="@+id/lstBatchedSamples"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvGenerateBatchHint"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvGenerateBatchTitle"
-            tools:visibility="invisible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

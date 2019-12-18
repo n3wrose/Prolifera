@@ -11,6 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <Button
+            android:id="@+id/btnReport"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            android:background="@color/colorPrimary"
+            android:text="Gerar Relatório"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvInfoHistoryMeasure"
+            tools:visibility="invisible" />
+
         <TextView
             android:id="@+id/tvRecentMeasure"
             android:layout_width="wrap_content"
@@ -26,27 +44,24 @@
             android:id="@+id/tvInfoHistoryMeasure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="172dp"
             android:background="@drawable/roundedbutton"
             android:backgroundTint="@android:color/holo_red_dark"
             android:padding="3dp"
             android:text="Sem medições!"
             android:textColor="@android:color/white"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lstHistoryMeasure" />
+            app:layout_constraintTop_toBottomOf="@+id/tvHistoryMeasure" />
 
         <ListView
             android:id="@+id/lstHistoryMeasure"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_height="0dp"
             android:isScrollContainer="true"
             android:nestedScrollingEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/tvInfoHistoryMeasure"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,12 +70,10 @@
         <ListView
             android:id="@+id/lstRecentMeasure"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_height="0dp"
             android:isScrollContainer="true"
             android:nestedScrollingEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/tvInfoRecentMeasure"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,26 +83,27 @@
             android:id="@+id/tvInfoRecentMeasure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="128dp"
             android:background="@drawable/roundedbutton"
             android:backgroundTint="@android:color/holo_red_dark"
             android:padding="3dp"
             android:text="Sem medições!"
             android:textColor="@android:color/white"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lstRecentMeasure" />
+            app:layout_constraintTop_toBottomOf="@+id/tvRecentMeasure" />
 
         <TextView
             android:id="@+id/tvHistoryMeasure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="272dp"
+            android:layout_marginTop="16dp"
             android:text="Histórico de medições"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tvInfoRecentMeasure" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -87,7 +87,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvEtapasListTitle" />
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabEtapas"
+            android:id="@+id/tabEtapa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -105,7 +105,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabEtapas"
+            app:layout_constraintTop_toBottomOf="@+id/tabEtapa"
             app:layout_constraintVertical_bias="0.494" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

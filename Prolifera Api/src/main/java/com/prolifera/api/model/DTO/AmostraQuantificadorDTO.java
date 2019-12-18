@@ -10,7 +10,7 @@ public class AmostraQuantificadorDTO {
 
     private Quantificador quantificador;
     private double valor;
-    private Date timestamp;
+    private String timestamp;
 
     public String getTexto() {
         return quantificador.getNome()+": "+valor+" "+ quantificador.getUnidade();
@@ -20,7 +20,7 @@ public class AmostraQuantificadorDTO {
     public AmostraQuantificadorDTO(AmostraQuantificador am)
     {
         valor = am.getValor();
-        timestamp = am.getTimestamp();
+        timestamp = am.getTimestamp().toString();
     }
 
     public AmostraQuantificadorDTO() { }
@@ -41,11 +41,11 @@ public class AmostraQuantificadorDTO {
         this.valor = valor;
     }
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 

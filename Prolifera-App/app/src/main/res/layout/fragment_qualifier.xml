@@ -28,13 +28,12 @@
                 android:id="@+id/etQualifierName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 app:layout_constraintBaseline_toBaselineOf="@+id/tvEnterQualifierName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvEnterQualifierName" />
+                app:layout_constraintStart_toStartOf="@+id/metOpcoes" />
 
             <TextView
                 android:id="@+id/tvEnterQualifierOptions"
